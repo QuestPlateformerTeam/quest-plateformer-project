@@ -1,0 +1,43 @@
+#include <iostream>
+#include <SFML/Graphics.hpp>
+
+int main()
+{
+    // Create the main window
+    sf::RenderWindow app(sf::VideoMode(800, 600), "SFML window");
+
+    // Load a sprite to display
+    sf::Texture texture;
+    if (!texture.loadFromFile("./resources/cb.bmp"))
+        return EXIT_FAILURE;
+    sf::Sprite sprite(texture);
+
+
+    std::cout << "Ouverture programme" << std::endl;
+	// Start the game loop
+    while (app.isOpen())
+    {
+        // Process events
+        sf::Event event;
+        while (app.pollEvent(event))
+        {
+            // Close window : exit
+            if (event.type == sf::Event::Closed)
+                app.close();
+        }
+
+        // Clear screen
+        app.clear();
+
+        // Draw the sprite
+        app.draw(sprite);
+
+        // Update the window
+        app.display();
+    }
+
+    std::cout << "Fermeture programme" << std::endl;
+
+    return EXIT_SUCCESS;
+
+}
