@@ -47,6 +47,9 @@
 			<Add library="winmm" />
 			<Add library="dxguid" />
 			<Add directory="C:/Users/lopez/Documents/_programmingLibraries/c++/SFML-2.5.1/lib" />
+			
+			
+			
 		</Linker>
 		<Unit filename="cb.bmp" />
 		<Unit filename="main.cpp" />
