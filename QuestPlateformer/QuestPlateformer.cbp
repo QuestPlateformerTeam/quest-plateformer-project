@@ -48,23 +48,15 @@
 			<Add library="dxguid" />
 			<Add directory="C:/Users/lopez/Documents/_programmingLibraries/c++/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="QuestPlateformer.depend" />
+		<Unit filename="QuestPlateformer.layout" />
 		<Unit filename="cb.bmp" />
-		<Unit filename="input.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="input.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="input.cpp" />
+		<Unit filename="input.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="main.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="map.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="map.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="main.h" />
+		<Unit filename="map.cpp" />
+		<Unit filename="map.h" />
 		<Unit filename="resources/cb.bmp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
