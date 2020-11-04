@@ -10,17 +10,14 @@ Map::Map()
     //Chargement du background
     if (!backgroundTexture.loadFromFile("graphics/background.png"))
     {
-        // Erreur
-        cout << "Erreur durant le chargement de l'image de background." << endl;
+    // Erreur
+    cout << "Erreur durant le chargement de l'image de background." << endl;
     }
-    else{
-        background.setTexture(backgroundTexture);
-    }
-
-
-    //Fonctions
-
-    void Map::drawBackground(RenderWindow &window)
-    {
-    window.draw(background);
+    else
+    background.setTexture(backgroundTexture);
+}
+//Fonctions
+void Map::drawBackground(RenderWindow &window)
+{
+window.draw(background);
 }
