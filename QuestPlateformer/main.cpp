@@ -2,7 +2,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "main.h"
-#include "input.h"
 
 using namespace std;
 using namespace sf;
@@ -22,6 +21,7 @@ int main(int argc, char *argv[])
 
     //Instanciation des classes
     Input input;
+    Map map;
 
     // Boucle infinie, principale, du jeu
     while (window.isOpen())
@@ -30,8 +30,10 @@ int main(int argc, char *argv[])
         input.gestionInputs(window);
 
         /** DESSIN - DRAW **/
-        //On efface l'�cran et on l'affiche
+        //On dessine tout
         window.clear();
+        //On affiche le background
+        map.drawBackground(window);
         window.display();
     }
 

@@ -4,7 +4,9 @@
 #include <cstdlib>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+
 #include "input.h"
+#include "map.h"
 
 using namespace std;
 using namespace sf;
