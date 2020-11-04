@@ -9,12 +9,13 @@ using namespace sf;
 
 int main(int argc, char *argv[])
 {
-    // Création d'une fenêtre en SFML
+    // Crï¿½ation d'une fenï¿½tre en SFML
     RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32),
     "Rabidja 3.0 - Chapitre 3 - Big Tuto SFML2 - www.meruvia.fr");
 
-    //Limite les fps à 60 images / seconde
+    //Limite les fps ï¿½ 60 images / seconde
     window.setFramerateLimit(60);
+
 
     //On active la synchro verticale
     window.setVerticalSyncEnabled(true);
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
         input.gestionInputs(window);
 
         /** DESSIN - DRAW **/
-        //On efface l'écran et on l'affiche
+        //On efface l'ï¿½cran et on l'affiche
         window.clear();
         window.display();
     }
