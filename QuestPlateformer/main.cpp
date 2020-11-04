@@ -1,43 +1,39 @@
+#include <cstdlib>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "main.h"
+#include "input.h"
 
-int main()
+using namespace std;
+using namespace sf;
+
+int main(int argc, char *argv[])
 {
-    // Create the main window
-    sf::RenderWindow app(sf::VideoMode(800, 600), "SFML window");
+    // Création d'une fenêtre en SFML
+    RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32),
+    "Rabidja 3.0 - Chapitre 3 - Big Tuto SFML2 - www.meruvia.fr");
 
-    // Load a sprite to display
-    sf::Texture texture;
-    if (!texture.loadFromFile("./resources/cb.bmp"))
-        return EXIT_FAILURE;
-    sf::Sprite sprite(texture);
+    //Limite les fps à 60 images / seconde
+    window.setFramerateLimit(60);
 
+    //On active la synchro verticale
+    window.setVerticalSyncEnabled(true);
 
-    std::cout << "Ouverture programme" << std::endl;
-	// Start the game loop
-    while (app.isOpen())
+    //Instanciation des classes
+    Input input;
+
+    // Boucle infinie, principale, du jeu
+    while (window.isOpen())
     {
-        // Process events
-        sf::Event event;
-        while (app.pollEvent(event))
-        {
-            // Close window : exit
-            if (event.type == sf::Event::Closed)
-                app.close();
-        }
+        /** GESTION DES INPUTS (CLAVIER, JOYSTICK) **/
+        input.gestionInputs(window);
 
-        // Clear screen
-        app.clear();
-
-        // Draw the sprite
-        app.draw(sprite);
-
-        // Update the window
-        app.display();
+        /** DESSIN - DRAW **/
+        //On efface l'écran et on l'affiche
+        window.clear();
+        window.display();
     }
 
-    std::cout << "Fermeture programme" << std::endl;
-
-    return EXIT_SUCCESS;
-
+    // On quitte
+    return 0;
 }
