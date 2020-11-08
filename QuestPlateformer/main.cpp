@@ -3,14 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include "main.h"
 
-using namespace std;
-using namespace sf;
-
 int main(int argc, char *argv[])
 {
-    // Création d'une fenêtre en SFML
+// Création d'une fenêtre en SFML
     RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32),
-                        "Rabidja 3.0 - Chapitre 5 : La map - Big Tuto SFML2 - www.meruvia.fr");
+                        "Rabidja 3.0 - Chapitre 7 : Rabidja - Big Tuto SFML2 - www.meruvia.fr");
 
 //Limite les fps à 60 images / seconde
     window.setFramerateLimit(60);
@@ -21,10 +18,16 @@ int main(int argc, char *argv[])
 //Instanciation des classes
     Input input;
     Map map;
+    Player player;
 
 //On commence au premier niveau (vous pouvez aussi mettre 2 pour tester le 2ème niveau)
     map.setLevel(1);
     map.changeLevel();
+
+//On initialise le player
+    player.initialize(map, true);
+    player.setVies(3);
+    player.setEtoiles(0);
 
 // Boucle infinie, principale, du jeu
     while (window.isOpen())
@@ -32,12 +35,13 @@ int main(int argc, char *argv[])
         /** GESTION DES INPUTS (CLAVIER, JOYSTICK) **/
         input.gestionInputs(window);
 
+        /** MISES A JOUR - UPDATES **/
+        //On met à jour le player : Rabidja
+        player.update(input, map);
+
         /** DESSIN - DRAW **/
 //On dessine tout
         window.clear();
-
-//Fonction provisoire pour tester le défilement de la map
-        map.testDefilement();
 
 //On affiche le background
         map.drawBackground(window);
@@ -48,6 +52,9 @@ int main(int argc, char *argv[])
 // Affiche la map de tiles : layer 1 (couche active : sol, etc.)
         map.draw(1, window);
 
+// Affiche le joueur
+        player.draw(map, window);
+
 // Affiche la map de tiles : layer 3 (couche en foreground / devant)
         map.draw(3, window);
 
@@ -56,4 +63,5 @@ int main(int argc, char *argv[])
 
 // On quitte
     return 0;
+
 }
