@@ -1,6 +1,3 @@
-//Rabidja 3 - nouvelle version intégralement en SFML 2
-//Copyright / Droits d'auteur : www.meruvia.fr - Jérémie F. Bellanger
-
 #include "map.h"
 
 using namespace std;

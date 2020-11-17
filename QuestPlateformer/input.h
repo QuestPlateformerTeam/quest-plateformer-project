@@ -1,5 +1,3 @@
-//Rabidja 3 - nouvelle version convertie en SFML 2
-//Copyright / Droits d'auteur : www.meruvia.fr - Jérémie F. Bellanger
 #ifndef INPUT_H_INCLUDED
 #define INPUT_H_INCLUDED
 #include <SFML/Graphics.hpp>
