@@ -1,13 +1,13 @@
 #include <cstdlib>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "main.h"
 
 int main(int argc, char *argv[])
 {
 // Création d'une fenêtre en SFML
-    RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32),
-                        "Rabidja 3.0 - Chapitre 7 : Rabidja - Big Tuto SFML2 - www.meruvia.fr");
+    RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Ninjaaaa");
 
 //Limite les fps à 60 images / seconde
     window.setFramerateLimit(60);
@@ -28,6 +28,15 @@ int main(int argc, char *argv[])
     player.initialize(map, true);
     player.setVies(3);
     player.setEtoiles(0);
+
+    /*sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("ressources/songs/ansisys.wav"))
+        return -1;*/
+    sf::Music music;
+    if (!music.openFromFile("ressources/songs/ansisys.wav"))
+        return -1; // erreur
+    music.play();
+    music.setVolume(50.f);
 
 // Boucle infinie, principale, du jeu
     while (window.isOpen())

@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "input.h"
 #include "map.h"
