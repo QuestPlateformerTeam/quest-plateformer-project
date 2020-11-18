@@ -1,37 +1,71 @@
-
+#include <iostream>
+#include <string>
 #include "menu.h"
+
+Menu::Menu()
+{
+    //ctor
+
+}
 
 Menu::Menu(float width, float height)
 {
+    this->width = width;
+    this->height = height;
+
     if(!font.loadFromFile("ressources/police/arial.ttf"))
     {
-        //handle error
+        std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;
     }
-    menu[0].setFont(font);
+    if(!fontTitle.loadFromFile("ressources/police/castlevania.ttf"))
+    {
+        std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;
+    }
+
     menu[0].setColor(sf::Color::Red);
     menu[0].setString("Play");
-    menu[0].setPosition(sf::Vector2f((width/2)-40,height/(MAX_NUMBER_OF_ITEMS+1)*1));
 
-    menu[1].setFont(font);
     menu[1].setColor(sf::Color::White);
     menu[1].setString("Options");
-    menu[1].setPosition(sf::Vector2f((width/2)-40,height/(MAX_NUMBER_OF_ITEMS+1)*2));
 
-    menu[2].setFont(font);
     menu[2].setColor(sf::Color::White);
     menu[2].setString("Exit");
-    menu[2].setPosition(sf::Vector2f((width/2)-40,height/(MAX_NUMBER_OF_ITEMS+1)*3));
 
     selectedItemIndex = 0;
 }
 
 Menu::~Menu()
 {
-
+    //dtor
 }
 
 void Menu::draw(sf::RenderWindow & window){
+
+    sf::RectangleShape rectangle;
+    rectangle.setSize(sf::Vector2f(300, 50));
+    rectangle.setFillColor(sf::Color::Black);
+    rectangle.setOutlineColor(sf::Color::White);
+    rectangle.setOutlineThickness(4);
+
+    sf::Text title;
+    title.setString("Quest Plateformer");
+    title.setColor(sf::Color::White);
+    title.setFont(fontTitle);
+    title.setCharacterSize(60);
+    title.setPosition((this->getWidth()/2)-(title.getGlobalBounds().width/2),10);
+    window.draw(title);
+
+
     for(int i = 0; i< MAX_NUMBER_OF_ITEMS; i++){
+        float calculatedWidthRect = (this->getWidth()/2) - 150;
+        float calculatedWidthText = (this->getWidth()/2) - (menu[i].getGlobalBounds().width/2);
+        float calculatedHeight = this->getHeight()/(MAX_NUMBER_OF_ITEMS+1)*(i+1);
+
+        rectangle.setPosition(calculatedWidthRect,calculatedHeight - 5 );
+        menu[i].setPosition(sf::Vector2f(calculatedWidthText,calculatedHeight));
+        menu[i].setFont(font);
+
+        window.draw(rectangle);
         window.draw(menu[i]);
     }
 }
@@ -53,4 +87,12 @@ void Menu::MoveDown()
     }
 }
 
+float Menu::getWidth()
+{
+    return this->width;
+}
 
+float Menu::getHeight()
+{
+    return this->height;
+}

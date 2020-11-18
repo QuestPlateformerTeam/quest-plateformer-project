@@ -6,18 +6,27 @@
 class Menu
 {
     public:
+        Menu();
         Menu(float width, float height);
-        ~Menu();
-
+        virtual ~Menu();
         void draw(sf::RenderWindow &window);
         void MoveUp();
         void MoveDown();
         int GetPressedItem(){ return selectedItemIndex;};
+        float getWidth();
+        float getHeight();
+
+    protected:
+
     private:
         int selectedItemIndex;
         sf::Font font;
+        sf::Font fontTitle;
         sf::Text menu[MAX_NUMBER_OF_ITEMS];
-
+        float width;
+        float height;
 };
 
-#endif // MENU_H_INCLUDED
+#endif // MENU_H
+
+

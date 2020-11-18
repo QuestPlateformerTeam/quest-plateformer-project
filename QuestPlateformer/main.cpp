@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-    sf::RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Ninjaaaa");
+    sf::RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Quest Plateformer");
     //Limite les fps à 60 images / seconde
     window.setFramerateLimit(60);
 
