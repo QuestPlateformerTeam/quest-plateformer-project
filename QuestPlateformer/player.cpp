@@ -165,6 +165,26 @@ void Player::initialize(Map &map, bool newLevel)
 
 void Player::draw(Map &map, RenderWindow &window)
 {
+    sf::RectangleShape rectangle;
+    rectangle.setSize(sf::Vector2f(100, 50));
+    rectangle.setOutlineColor(sf::Color::Green);
+    rectangle.setFillColor(sf::Color::Black);
+    rectangle.setOutlineThickness(5);
+    rectangle.setPosition(30, 35);
+    window.draw(rectangle);
+
+    if(!font.loadFromFile("ressources/police/arial.ttf"))
+    {
+        //handle error
+    }
+    nbVieScreen.setFont(font);
+    nbVieScreen.setColor(sf::Color::White);
+    string fullString = "Vie:" + std::to_string(this->getVies());
+    nbVieScreen.setString(fullString);
+    nbVieScreen.setPosition(sf::Vector2f(40,40));
+
+    window.draw(nbVieScreen);
+
     if (frameTimer <= 0)
     {
 //On le réinitialise

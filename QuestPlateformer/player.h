@@ -13,10 +13,10 @@ class Player
 
 public:
 
-//Constructeur
+    //Constructeur
     Player();
 
-//Accesseurs
+    //Accesseurs
     int getX(void) const;
     int getY(void) const;
     int getW(void) const;
@@ -29,7 +29,7 @@ public:
     int getEtoiles(void) const;
     int getDirection(void) const;
 
-//Mutateurs
+    //Mutateurs
     void setX(int valeur);
     void setY(int valeur);
     void setW(int valeur);
@@ -42,18 +42,19 @@ public:
     void setEtoiles(int valeur);
     void setCheckpoint(bool valeur);
 
-//Fonctions
-void initialize(Map &map, bool newLevel);
-void draw(Map &map, sf::RenderWindow &window);
-void update(Input &input, Map &map);
-void centerScrolling(Map &map);
-void mapCollision(Map &map);
+    //Fonctions
+    void initialize(Map &map, bool newLevel);
+    void draw(Map &map, sf::RenderWindow &window);
+    void update(Input &input, Map &map);
+    void centerScrolling(Map &map);
+    void mapCollision(Map &map);
 
 
 private:
 
-//Variables de la classe en accès privé
-
+    //Variables de la classe en accès privé
+    sf::Text nbVieScreen;
+    sf::Font font;
 // Points de vie/santé + chrono d'invicibilité
     int life, invincibleTimer;
 
@@ -185,11 +186,6 @@ private:
     const int TILE_PLATEFORME_DEBUT = 130;
     const int TILE_PLATEFORME_FIN = 131;
 
-// Tiles pentes à 26.5° ; BenH = de BAS en HAUT ; HenB = De HAUT en BAS
-    const int TILE_PENTE_26_BenH_1 = 69;
-    const int TILE_PENTE_26_BenH_2 = 70;
-    const int TILE_PENTE_26_HenB_1 = 71;
-    const int TILE_PENTE_26_HenB_2 = 72;
 
 
 

@@ -40,6 +40,7 @@ class Map
     void testDefilement(void);
 
 
+
     private:
     //Variables de la classe en accès privé
 
