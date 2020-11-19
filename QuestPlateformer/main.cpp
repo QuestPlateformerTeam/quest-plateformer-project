@@ -53,6 +53,10 @@ int main(int argc, char *argv[])
                                     //On commence au premier niveau (vous pouvez aussi mettre 2 pour tester le 2ème niveau)
                                     map.setLevel(1);
                                     map.changeLevel();
+                                    music.stop();
+                                    if (!music.openFromFile("ressources/songs/ghost.wav"))
+                                        return -1; // erreur
+                                    music.play();
 
                                     //On initialise le player
                                     player.initialize(map, true);
