@@ -41,7 +41,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="C:/Users/lopez/Documents/_programmingLibraries/c++/SFML-2.5.1/include" />
+			<Add directory="C:/SDL/SFML-2.5.1/include" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
@@ -49,33 +49,16 @@
 			<Add library="gdi32" />
 			<Add library="winmm" />
 			<Add library="dxguid" />
-			<Add directory="C:/Users/lopez/Documents/_programmingLibraries/c++/SFML-2.5.1/lib" />
+			<Add directory="C:/SDL/SFML-2.5.1/lib" />
 		</Linker>
-		<Unit filename="QuestPlateformer.depend" />
-		<Unit filename="QuestPlateformer.layout" />
 		<Unit filename="cb.bmp" />
-		<Unit filename="include/menu.h" />
-		<Unit filename="input.cpp" />
-		<Unit filename="input.h" />
+		<Unit filename="include/homeMenu.h" />
+		<Unit filename="include/map.h" />
+		<Unit filename="include/player.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="main.h" />
-		<Unit filename="map.cpp" />
-		<Unit filename="map.h" />
-		<Unit filename="menu.cpp" />
-		<Unit filename="menu.h" />
-		<Unit filename="player.cpp" />
-		<Unit filename="player.h" />
-		<Unit filename="ressources/graphics/background.png" />
-		<Unit filename="ressources/graphics/rabidja.png" />
-		<Unit filename="ressources/graphics/tileset1.png" />
-		<Unit filename="ressources/graphics/tileset1b.png" />
-		<Unit filename="ressources/graphics/tileset2.png" />
-		<Unit filename="ressources/maps/map1.txt" />
-		<Unit filename="ressources/maps/map2.txt" />
-		<Unit filename="ressources/songs/ansisys.mp3" />
-		<Unit filename="ressources/songs/ansisys.ogg" />
-		<Unit filename="ressources/songs/ansisys.wav" />
-		<Unit filename="src/menu.cpp" />
+		<Unit filename="src/homeMenu.cpp" />
+		<Unit filename="src/map.cpp" />
+		<Unit filename="src/player.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
