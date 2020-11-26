@@ -18,8 +18,7 @@ class Map : public sf::Drawable, public sf::Transformable
     private:
         sf::VertexArray m_vertices;
         sf::Texture m_tileset;
-        sf::Texture backgroundTexture;
-        sf::Sprite backgroundSprite;
+
 };
 
 #endif // MAP_H

@@ -25,7 +25,7 @@ Player::Player(int x, int y)
     else
     {
         sprite.setTexture(texture);
-        sprite.setTextureRect(sf::IntRect(0,0,40,50));
+        sprite.setTextureRect(sf::IntRect(0,0,PLAYER_WIDTH,PLAYER_HEIGHT));
     }
 }
 

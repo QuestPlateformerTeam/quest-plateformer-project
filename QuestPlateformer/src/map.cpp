@@ -2,17 +2,7 @@
 
 Map::Map()
 {
-    //Chargement de la spritesheet de Rabidja
-    if (!backgroundTexture.loadFromFile("ressources/graphics/background.png"))
-    {
-        // Erreur
-        std::cout << "Erreur durant le chargement du spritesheet de Rabidja." << std::endl;
-    }
-    else
-    {
-        backgroundSprite.setTexture(backgroundTexture);
-        std::cout << "C'est chargé" << std::endl;
-    }
+
 }
 
 Map::~Map()
@@ -22,7 +12,6 @@ Map::~Map()
 
  bool Map::load(const std::string& tileset, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height, sf::RenderWindow& window)
 {
-    window.draw(backgroundSprite);
     // on charge la texture du tileset
     if (!m_tileset.loadFromFile(tileset))
         return false;
@@ -72,5 +61,7 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
     // et on dessine enfin le tableau de vertex
     target.draw(m_vertices, states);
 }
+
+
 
 

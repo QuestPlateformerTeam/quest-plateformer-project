@@ -12,12 +12,7 @@ class Player
         virtual ~Player();
         void draw(sf::RenderWindow& window, Map map);
         void update(Map map, bool& flagInGame);
-        int getPositionX();
-        int getPositionY();
-        void setPositionX(int x);
-        void setPositionY(int y);
         void checkKeyPressed(bool& flagInGame);
-        void makePlayerJump();
 
     protected:
 
@@ -33,10 +28,11 @@ class Player
         sf::Sprite sprite;
 
         const int MOVESPEED = 5;
-        const int PLAYER_HEIGHT = 25;
-        const int PLAYER_WIDTH = 25;
+        const int PLAYER_HEIGHT = 50;
+        const int PLAYER_WIDTH = 40;
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 480;
+
 };
 
 #endif // PLAYER_H
