@@ -35,33 +35,27 @@ void Player::draw(sf::RenderWindow& window, Map map)
     window.draw(sprite);
 }
 
-void Player::checkKeyPressed(bool& flagInGame)
+void Player::update(Map map, bool& flagInGame, const int* level)
 {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !lockLeft)
     {
-        if(this->positionX>0)
-            this->positionX-=MOVESPEED;
+        positionX-= speed;
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !lockRight)
     {
-        if(this->positionX < SCREEN_WIDTH - sprite.getGlobalBounds().width)
-            this->positionX+=MOVESPEED;
+        positionX+= speed;
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !lockUp && canJump)
     {
-        if(this->positionY>0 && canJump== true)
-        {
-            this->positionY-=MOVESPEED+150;
-            canJump=false;
-        }
+        positionY-=speed+100;
+        canJump = false;
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !lockDown)
     {
-        if(this->positionY < SCREEN_HEIGHT - sprite.getGlobalBounds().height)
-            this->positionY+=MOVESPEED;
+        positionY+= speed;
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -69,19 +63,44 @@ void Player::checkKeyPressed(bool& flagInGame)
         flagInGame = false;
     }
 
-    if(this->positionY < SCREEN_HEIGHT - sprite.getGlobalBounds().height -32 )
-        this->positionY+= velocityY*1.5;
-    else
+
+    if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
     {
-        canJump = true;
-        this->positionY = SCREEN_HEIGHT - sprite.getGlobalBounds().height - 32;
+        std::cout<<std::to_string(map.getTileNumber(positionX, positionY))<<std::endl;
+
+        if (level[map.getTileNumber(positionX+20, positionY)] == 60 )
+        {
+            std::cout<<"Collision a droite"<<std::endl;
+            lockRight = true;
+        }else
+        {
+            lockRight = false;
+        }
+        if (level[map.getTileNumber(positionX-20, positionY)] == 60 )
+        {
+            std::cout<<"Collision a gauche"<<std::endl;
+            lockLeft = true;
+        }else
+        {
+            lockLeft = false;
+        }
+        if (level[map.getTileNumber(positionX, positionY+25)] == 60 )
+        {
+            std::cout<<"Collision en bas"<<std::endl;
+            lockDown = true;
+            canJump = true;
+        }else
+        {
+            this->positionY+= velocityY*1.05;
+            lockDown = false;
+        }
+        if (level[map.getTileNumber(positionX, positionY-25)] == 60 )
+        {
+            std::cout<<"Collision en haut"<<std::endl;
+            lockUp = true;
+        }else
+        {
+            lockUp = false;
+        }
     }
-
-
 }
-
-void Player::update(Map map, bool& flagInGame)
-{
-    checkKeyPressed(flagInGame);
-}
-

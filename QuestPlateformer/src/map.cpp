@@ -1,16 +1,16 @@
-#include "map.h"
+#include "Map.h"
 
 Map::Map()
 {
-
+    //ctor
 }
 
 Map::~Map()
 {
-
+    //dtor
 }
 
- bool Map::load(const std::string& tileset, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height, sf::RenderWindow& window)
+bool Map::load(const std::string& tileset, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height, sf::RenderWindow& window)
 {
     // on charge la texture du tileset
     if (!m_tileset.loadFromFile(tileset))
@@ -32,7 +32,7 @@ Map::~Map()
             int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
 
             // on récupère un pointeur vers le quad à définir dans le tableau de vertex
-            sf::Vertex* quad = &m_vertices[(i + j * width) * 4];
+            quad = &m_vertices[(i + j * width) * 4];
 
             // on définit ses quatre coins
             quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
@@ -62,6 +62,15 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(m_vertices, states);
 }
 
-
-
-
+sf::Vertex* Map::getVertex()
+{
+    return quad;
+}
+sf::VertexArray Map::getVertices()
+{
+    return m_vertices;
+}
+int Map::getTileNumber(int x, int y)
+{
+    return ((((int)(x+20)/32))) + (((int)(y+25)/32)*25);
+}
