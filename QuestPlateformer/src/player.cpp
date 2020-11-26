@@ -1,4 +1,5 @@
 #include "player.h"
+#include "math.h"
 
 Player::Player()
 {
@@ -14,6 +15,7 @@ Player::Player(int x, int y)
 {
     this->positionX = x;
     this->positionY = y;
+
     //Chargement de la spritesheet de Rabidja
     if (!texture.loadFromFile("ressources/graphics/rabidja.png"))
     {
@@ -33,9 +35,8 @@ void Player::draw(sf::RenderWindow& window, Map map)
     window.draw(sprite);
 }
 
-void Player::update(Map map, bool& flagInGame)
+void Player::checkKeyPressed(bool& flagInGame)
 {
-
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         if(this->positionX>0)
@@ -50,10 +51,10 @@ void Player::update(Map map, bool& flagInGame)
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
-        if(this->positionY>0)
+        if(this->positionY>0 && canJump== true)
         {
-            this->positionY-=MOVESPEED;
-            topJump = true;
+            this->positionY-=MOVESPEED+150;
+            canJump=false;
         }
     }
 
@@ -68,9 +69,19 @@ void Player::update(Map map, bool& flagInGame)
         flagInGame = false;
     }
 
-    if(this->positionY < (SCREEN_HEIGHT - rectangle.getGlobalBounds().height))
+    if(this->positionY < SCREEN_HEIGHT - sprite.getGlobalBounds().height -32 )
+        this->positionY+= velocityY*1.5;
+    else
     {
-        //this->positionY+= MOVESPEED;
+        canJump = true;
+        this->positionY = SCREEN_HEIGHT - sprite.getGlobalBounds().height - 32;
     }
 
+
 }
+
+void Player::update(Map map, bool& flagInGame)
+{
+    checkKeyPressed(flagInGame);
+}
+

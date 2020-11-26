@@ -16,6 +16,8 @@ class Player
         int getPositionY();
         void setPositionX(int x);
         void setPositionY(int y);
+        void checkKeyPressed(bool& flagInGame);
+        void makePlayerJump();
 
     protected:
 
@@ -23,15 +25,13 @@ class Player
         sf::RectangleShape rectangle;
         int positionX;
         int positionY;
-        bool canJump = true;
-        bool topJump = true;
-        int currentHeightJump = 0;
-        int distanceCalculated = 9;
+        bool canJump = false;
+        float velocityY = 10;
+
         //Spritesheet de Rabidja
         sf::Texture texture;
         sf::Sprite sprite;
 
-        const int MAX_HEIGHT_JUMP = 150;
         const int MOVESPEED = 5;
         const int PLAYER_HEIGHT = 25;
         const int PLAYER_WIDTH = 25;
