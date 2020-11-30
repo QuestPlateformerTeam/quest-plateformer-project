@@ -2,7 +2,9 @@
 
 Map::Map()
 {
-    //ctor
+    // on crée la tilemap avec le niveau précédemment défini
+    if (!load("ressources/graphics/tileset1.png", sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
+        std::cout<<"Erreur lors du chargement du tilset"<<std::endl;
 }
 
 Map::~Map()
@@ -10,24 +12,48 @@ Map::~Map()
     //dtor
 }
 
-bool Map::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height, sf::RenderWindow& window)
+//Getters & Setters
+sf::Vertex* Map::getVertex(){return quad;}
+sf::VertexArray Map::getVertices(){return m_vertices;}
+int Map::getScreenWidth() const{return SCREEN_WIDTH;}
+int Map::getScreenHeight() const{return SCREEN_HEIGHT;}
+int Map::getTileSize() const{return TILE_SIZE;}
+int Map::getNbTileByLine() const{return NB_TILE_BY_LINE;}
+int Map::getNbTileByColumn() const{return NB_TILE_BY_COLUMN;}
+int* Map::getTiles(){return tiles;}
+int Map::getStartX(){return startX;}
+int Map::getStartY(){return startY;}
+int Map::getTileNumber(int x, int y, int PLAYER_WIDTH, int PLAYER_HEIGHT)
 {
-    std::fstream myFile("ressources/maps/map1.txt", std::ios_base::in);
+    return ((((int)(x+PLAYER_WIDTH/2)/TILE_SIZE))) + (((int)(y+PLAYER_HEIGHT/2)/TILE_SIZE)*NB_TILE_BY_LINE);
+}
+
+//Ici je charge le niveau souhaité dans ma liste de map
+void Map::setMap(std::string filename)
+{
+    std::fstream myFile(filename, std::ios_base::in);
     std::string Line;
     if(myFile.is_open())
     {
         std::cout<<"map chargee"<<std::endl;
-        for (int i = 0; i < NB_TILE ; i++) // get 3 values
+        for (int i = 0; i < NB_TILE ; i++) //Récupère les valeurs pour chaque tuile
         {
-            getline(myFile,Line,','); // get values, one at a time, delimited by the / character
+            getline(myFile,Line,','); //Récupère les valeurs une par une séparée par le délimiteur ','
             std::stringstream iss;
-            iss << Line; //Put the string into a stream
-            iss >> tiles[i]; //This outputs the data as an int.
+            iss << Line; //Stocke les caractères dans un stream
+            iss >> tiles[i]; //Renvoie le stream en un int dans l'array
         }
         myFile.close();
     }
     else
         std::cout<<"Erreur chargement map"<<std::endl;
+}
+
+//Cette fonction charge la map graphique sur la map de tuile vide
+bool Map::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height)
+{
+    //Je récupère la map sous forme de tuile vide de 32x32
+    setMap("ressources/maps/map2.txt");
 
     // on charge la texture du tileset
     if (!m_tileset.loadFromFile(tileset))
@@ -77,52 +103,4 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(m_vertices, states);
 }
 
-sf::Vertex* Map::getVertex()
-{
-    return quad;
-}
-sf::VertexArray Map::getVertices()
-{
-    return m_vertices;
-}
-int Map::getTileNumber(int x, int y, int PLAYER_WIDTH, int PLAYER_HEIGHT)
-{
-    return ((((int)(x+PLAYER_WIDTH/2)/TILE_SIZE))) + (((int)(y+PLAYER_HEIGHT/2)/TILE_SIZE)*NB_TILE_BY_LINE);
-}
 
-int Map::getScreenWidth() const
-{
-    return SCREEN_WIDTH;
-}
-int Map::getScreenHeight() const
-{
-    return SCREEN_HEIGHT;
-}
-int Map::getTileSize() const
-{
-    return TILE_SIZE;
-}
-int Map::getNbTileByLine() const
-{
-    return NB_TILE_BY_LINE;
-}
-
-int Map::getNbTileByColumn() const
-{
-    return NB_TILE_BY_COLUMN;
-}
-
-int* Map::getTiles()
-{
-    return tiles;
-}
-
-int Map::getStartX()
-{
-    return startX;
-}
-
-int Map::getStartY()
-{
-    return startY;
-}

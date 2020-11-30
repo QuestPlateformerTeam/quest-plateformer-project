@@ -12,7 +12,7 @@ class Map : public sf::Drawable, public sf::Transformable
     public:
         Map();
         virtual ~Map();
-        bool load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height, sf::RenderWindow& window);
+        bool load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height);
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         sf::Vertex* getVertex();
         sf::VertexArray getVertices();
@@ -25,11 +25,12 @@ class Map : public sf::Drawable, public sf::Transformable
         int getStartX();
         int getStartY();
         int* getTiles();
+        void setMap(std::string filename);
 
     protected:
 
     private:
-        static const int SCREEN_WIDTH = 800;
+        static const int SCREEN_WIDTH = 801;
         static const int SCREEN_HEIGHT = 480;
         static const int TILE_SIZE = 32;
         static const int NB_TILE_BY_LINE = SCREEN_WIDTH/TILE_SIZE;

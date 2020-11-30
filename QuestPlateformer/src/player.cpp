@@ -35,6 +35,12 @@ void Player::draw(sf::RenderWindow& window, Map map)
     window.draw(sprite);
 }
 
+void Player::update(Map map, bool& flagInGame, const int* level)
+{
+    deplacement(flagInGame);
+    wallDetection(map, level);
+}
+
 void Player::deplacement(bool& flagInGame)
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !lockLeft)
@@ -47,10 +53,10 @@ void Player::deplacement(bool& flagInGame)
         positionX+= MOVESPEED;
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !lockUp && canJump)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !lockUp)
     {
-        positionY-=MOVESPEED+100;
-        canJump = false;
+        positionY-=MOVESPEED;
+        //canJump = false;
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !lockDown)
@@ -88,10 +94,10 @@ void Player::wallDetection(Map map, const int* level)
         {
             std::cout<<"Collision en bas"<<std::endl;
             lockDown = true;
-            canJump = true;
+            //canJump = true;
         }else
         {
-            this->positionY+= velocityY*1.05;
+            //this->positionY+= velocityY*1.05;
             lockDown = false;
         }
         if (level[map.getTileNumber(positionX, positionY-25,PLAYER_WIDTH,PLAYER_HEIGHT)] == 60 )
@@ -103,10 +109,4 @@ void Player::wallDetection(Map map, const int* level)
             lockUp = false;
         }
     }
-}
-
-void Player::update(Map map, bool& flagInGame, const int* level)
-{
-    deplacement(flagInGame);
-    wallDetection(map, level);
 }
