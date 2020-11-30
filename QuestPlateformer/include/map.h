@@ -40,6 +40,11 @@ class Map : public sf::Drawable, public sf::Transformable
         sf::VertexArray m_vertices;
         sf::Texture m_tileset;
         sf::Vertex* quad;
+        sf::Text affichageVie;
+        sf::Font font;
+        sf::Texture backgroundTexture;
+        sf::Sprite backgroundSprite;
+
         int tileNumber;
         int tiles[NB_TILE];
         int startX = 20;

@@ -20,7 +20,7 @@ Player::Player(int x, int y)
     if (!texture.loadFromFile("ressources/graphics/deadpool.png"))
     {
         // Erreur
-        std::cout << "Erreur durant le chargement du spritesheet de Rabidja." << std::endl;
+        std::cout << "Erreur durant le chargement du spritesheet du player." << std::endl;
     }
     else
     {
@@ -56,7 +56,12 @@ void Player::deplacement(bool& flagInGame)
         positionX-= MOVESPEED;
         sprite.setTextureRect(sf::IntRect(counterWalking * PLAYER_HEIGHT ,PLAYER_WIDTH * 1.2,PLAYER_WIDTH,PLAYER_HEIGHT));
         if(!hasJump)
-            counterWalking++;
+            timee++;
+            if(timee==5)
+            {
+                counterWalking++;
+                timee =0;
+            }
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !lockRight)
@@ -64,7 +69,13 @@ void Player::deplacement(bool& flagInGame)
         positionX+= MOVESPEED;
         sprite.setTextureRect(sf::IntRect(counterWalking * PLAYER_HEIGHT, PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT));
         if(!hasJump)
-            counterWalking++;
+            timee++;
+            if(timee==5)
+            {
+                counterWalking++;
+                timee =0;
+            }
+
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !lockUp && canJump)
@@ -94,7 +105,7 @@ void Player::wallDetection(Map map, const int* level)
         if (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )
         {
             lockRight = true;
-            std::cout<<"Collision a droite"<<std::endl;
+            //std::cout<<"Collision a droite"<<std::endl;
         }else
         {
             lockRight = false;
@@ -102,7 +113,7 @@ void Player::wallDetection(Map map, const int* level)
         if (level[map.getTileNumber(positionX-20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )
         {
             lockLeft = true;
-            std::cout<<"Collision a gauche"<<std::endl;
+            //std::cout<<"Collision a gauche"<<std::endl;
         }else
         {
             lockLeft = false;
@@ -110,19 +121,19 @@ void Player::wallDetection(Map map, const int* level)
         if (level[map.getTileNumber(positionX, positionY+25,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )
         {
             lockDown = true;
-            std::cout<<"Collision en bas"<<std::endl;
+            //std::cout<<"Collision en bas"<<std::endl;
             canJump = true;
             isTopOfJump = false;
         }else if(isTopOfJump || !hasJump)
         {
             lockDown = false;
-            this->positionY+= velocityY*0.9;
+            this->positionY+= velocityY*0.5;
             hasJump = false;
         }
         if (level[map.getTileNumber(positionX, positionY-25,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )
         {
             lockUp = true;
-            std::cout<<"Collision en haut"<<std::endl;
+            //std::cout<<"Collision en haut"<<std::endl;
             isTopOfJump = true;
 
         }else

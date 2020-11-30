@@ -2,10 +2,14 @@
 
 Map::Map()
 {
-
     // on crée la tilemap avec le niveau précédemment défini
     if (!load("ressources/maps/map1.txt","ressources/graphics/tileset1.png", sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
         std::cout<<"Erreur lors du chargement du tilset"<<std::endl;
+
+    backgroundTexture.loadFromFile("ressources/graphics/background.png");
+    backgroundSprite.setScale(1.8,1.8);
+    backgroundSprite.setTexture(backgroundTexture);
+
 }
 
 Map::~Map()
@@ -91,6 +95,17 @@ bool Map::load(std::string mapToLoad,const std::string& tileset, sf::Vector2u ti
             quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
         }
 
+    if(!font.loadFromFile("ressources/police/arial.ttf"))
+    {
+        std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;
+    }
+
+    affichageVie.setString("Vies: 3   Level: 1");
+    affichageVie.setColor(sf::Color::White);
+    affichageVie.setFont(font);
+    affichageVie.setCharacterSize(25);
+    affichageVie.setPosition(20,10);
+
     return true;
 }
 
@@ -101,7 +116,9 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
     // on applique la texture du tileset
     states.texture = &m_tileset;
     // et on dessine enfin le tableau de vertex
+    target.draw(backgroundSprite);
     target.draw(m_vertices, states);
+    target.draw(affichageVie);
 }
 
 

@@ -42,6 +42,7 @@ class Player
         //Spritesheet de Rabidja
         sf::Texture texture;
         sf::Sprite sprite;
+        int timee = 0;
 
         //Constantes
         const int MOVESPEED = 3;
