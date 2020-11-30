@@ -10,8 +10,25 @@ Map::~Map()
     //dtor
 }
 
-bool Map::load(const std::string& tileset, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height, sf::RenderWindow& window)
+bool Map::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height, sf::RenderWindow& window)
 {
+    std::fstream myFile("ressources/maps/map1.txt", std::ios_base::in);
+    std::string Line;
+    if(myFile.is_open())
+    {
+        std::cout<<"map chargee"<<std::endl;
+        for (int i = 0; i < NB_TILE ; i++) // get 3 values
+        {
+            getline(myFile,Line,','); // get values, one at a time, delimited by the / character
+            std::stringstream iss;
+            iss << Line; //Put the string into a stream
+            iss >> tiles[i]; //This outputs the data as an int.
+        }
+        myFile.close();
+    }
+    else
+        std::cout<<"Erreur chargement map"<<std::endl;
+
     // on charge la texture du tileset
     if (!m_tileset.loadFromFile(tileset))
         return false;
@@ -54,10 +71,8 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     // on applique la transformation
     states.transform *= getTransform();
-
     // on applique la texture du tileset
     states.texture = &m_tileset;
-
     // et on dessine enfin le tableau de vertex
     target.draw(m_vertices, states);
 }
@@ -70,7 +85,44 @@ sf::VertexArray Map::getVertices()
 {
     return m_vertices;
 }
-int Map::getTileNumber(int x, int y)
+int Map::getTileNumber(int x, int y, int PLAYER_WIDTH, int PLAYER_HEIGHT)
 {
-    return ((((int)(x+20)/32))) + (((int)(y+25)/32)*25);
+    return ((((int)(x+PLAYER_WIDTH/2)/TILE_SIZE))) + (((int)(y+PLAYER_HEIGHT/2)/TILE_SIZE)*NB_TILE_BY_LINE);
+}
+
+int Map::getScreenWidth() const
+{
+    return SCREEN_WIDTH;
+}
+int Map::getScreenHeight() const
+{
+    return SCREEN_HEIGHT;
+}
+int Map::getTileSize() const
+{
+    return TILE_SIZE;
+}
+int Map::getNbTileByLine() const
+{
+    return NB_TILE_BY_LINE;
+}
+
+int Map::getNbTileByColumn() const
+{
+    return NB_TILE_BY_COLUMN;
+}
+
+int* Map::getTiles()
+{
+    return tiles;
+}
+
+int Map::getStartX()
+{
+    return startX;
+}
+
+int Map::getStartY()
+{
+    return startY;
 }

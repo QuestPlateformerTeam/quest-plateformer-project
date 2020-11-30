@@ -26,6 +26,8 @@ class HomeMenu
         sf::Font font;
         sf::Font fontTitle;
         sf::Text menu[MAX_NUMBER_OF_ITEMS];
+        sf::Text title;
+        sf::RectangleShape rectangle;
         float width;
         float height;
 };

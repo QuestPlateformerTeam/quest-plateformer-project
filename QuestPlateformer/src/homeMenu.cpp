@@ -34,24 +34,22 @@ HomeMenu::HomeMenu(float width, float height)
     menu[2].setString("Exit");
 
     selectedItemIndex = 0;
-}
 
-void HomeMenu::draw(sf::RenderWindow & window){
-
-    sf::Text title;
     title.setString("Quest Plateformer");
     title.setColor(sf::Color::White);
     title.setFont(fontTitle);
     title.setCharacterSize(60);
     title.setPosition((this->getWidth()/2)-(title.getGlobalBounds().width/2),10);
 
-    sf::RectangleShape rectangle;
     rectangle.setSize(sf::Vector2f(300, 50));
     rectangle.setFillColor(sf::Color::Black);
     rectangle.setOutlineColor(sf::Color::White);
     rectangle.setOutlineThickness(4);
-    window.draw(title);
+}
 
+void HomeMenu::draw(sf::RenderWindow & window){
+
+    window.draw(title);
 
     for(int i = 0; i< MAX_NUMBER_OF_ITEMS; i++){
         float calculatedWidthRect = (this->getWidth()/2) - 150;

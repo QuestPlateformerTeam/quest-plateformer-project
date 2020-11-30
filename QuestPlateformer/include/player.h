@@ -11,12 +11,13 @@ class Player
         Player(int x, int y);
         virtual ~Player();
         void draw(sf::RenderWindow& window, Map map);
-        void update(Map map, bool& flagInGame,const int* level);
+        void update(Map map, bool& flagInGame, const int* level);
+        void deplacement(bool& flagInGame);
+        void wallDetection(Map map, const int* level);
 
     protected:
 
     private:
-        sf::RectangleShape rectangle;
         int positionX;
         int positionY;
         bool canJump = false;
@@ -30,11 +31,9 @@ class Player
         sf::Texture texture;
         sf::Sprite sprite;
 
-        const int speed = 5;
+        const int MOVESPEED = 5;
         const int PLAYER_HEIGHT = 50;
         const int PLAYER_WIDTH = 40;
-        const int SCREEN_WIDTH = 800;
-        const int SCREEN_HEIGHT = 480;
 
 };
 

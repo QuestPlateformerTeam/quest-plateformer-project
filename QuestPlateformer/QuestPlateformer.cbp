@@ -56,6 +56,7 @@
 		<Unit filename="include/map.h" />
 		<Unit filename="include/player.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="ressources/maps/map1.txt" />
 		<Unit filename="src/homeMenu.cpp" />
 		<Unit filename="src/map.cpp" />
 		<Unit filename="src/player.cpp" />
