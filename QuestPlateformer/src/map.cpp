@@ -2,8 +2,9 @@
 
 Map::Map()
 {
+
     // on crée la tilemap avec le niveau précédemment défini
-    if (!load("ressources/graphics/tileset1.png", sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
+    if (!load("ressources/maps/map1.txt","ressources/graphics/tileset1.png", sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
         std::cout<<"Erreur lors du chargement du tilset"<<std::endl;
 }
 
@@ -50,10 +51,10 @@ void Map::setMap(std::string filename)
 }
 
 //Cette fonction charge la map graphique sur la map de tuile vide
-bool Map::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height)
+bool Map::load(std::string mapToLoad,const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height)
 {
     //Je récupère la map sous forme de tuile vide de 32x32
-    setMap("ressources/maps/map1.txt");
+    setMap(mapToLoad);
 
     // on charge la texture du tileset
     if (!m_tileset.loadFromFile(tileset))
