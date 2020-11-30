@@ -10,12 +10,12 @@
 int main(int argc, char *argv[])
 {
     Map map;
-    Player player(map.getStartX()+50,map.getStartY());
+    Player player(map.getStartX(),map.getStartY());
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
     bool flagInGame = false;
 
     sf::RenderWindow window(sf::VideoMode(map.getScreenWidth(), map.getScreenHeight(), map.getTileSize()), "Quest Plateformer | Neven - Leveau - Lopez - Moins ");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(30);
     window.setVerticalSyncEnabled(true);
 
     sf::err().rdbuf(NULL); //Supprime une boucle warning console sur pc Alex

@@ -53,7 +53,7 @@ void Map::setMap(std::string filename)
 bool Map::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height)
 {
     //Je récupère la map sous forme de tuile vide de 32x32
-    setMap("ressources/maps/map2.txt");
+    setMap("ressources/maps/map1.txt");
 
     // on charge la texture du tileset
     if (!m_tileset.loadFromFile(tileset))

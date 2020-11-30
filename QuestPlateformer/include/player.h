@@ -26,12 +26,17 @@ class Player
         bool lockDown;
         bool lockLeft;
         bool lockRight;
+        int counterWalking = 0;
+        bool hasJump =false;
+        bool isTopOfJump = true;
+        int fromHeight;
 
         //Spritesheet de Rabidja
         sf::Texture texture;
         sf::Sprite sprite;
 
-        const int MOVESPEED = 5;
+        const int MOVESPEED = 3;
+        const int MAX_HEIGHT_JUMP = 80;
         const int PLAYER_HEIGHT = 50;
         const int PLAYER_WIDTH = 40;
 

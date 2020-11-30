@@ -30,7 +30,7 @@ class Map : public sf::Drawable, public sf::Transformable
     protected:
 
     private:
-        static const int SCREEN_WIDTH = 801;
+        static const int SCREEN_WIDTH = 800;
         static const int SCREEN_HEIGHT = 480;
         static const int TILE_SIZE = 32;
         static const int NB_TILE_BY_LINE = SCREEN_WIDTH/TILE_SIZE;
@@ -42,8 +42,8 @@ class Map : public sf::Drawable, public sf::Transformable
         sf::Vertex* quad;
         int tileNumber;
         int tiles[NB_TILE];
-        int startX = 100;
-        int startY = 100;
+        int startX = 20;
+        int startY = 400;
 };
 
 #endif // MAP_H
