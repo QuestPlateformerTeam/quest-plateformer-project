@@ -9,8 +9,8 @@
 
 int main(int argc, char *argv[])
 {
-    Map map;
-    Player player(map.getStartX(),map.getStartY());
+    Player player(20,400);
+    Map map("ressources/maps/map1.txt");
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
     bool flagInGame = false;
 

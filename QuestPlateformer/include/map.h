@@ -10,7 +10,7 @@
 class Map : public sf::Drawable, public sf::Transformable
 {
     public:
-        Map();
+        Map(std::string filename);
         virtual ~Map();
         bool load(std::string mapToLoad,const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height);
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

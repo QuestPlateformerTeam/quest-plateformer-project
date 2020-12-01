@@ -13,14 +13,17 @@ class Player
         void draw(sf::RenderWindow& window, Map map);
         void update(Map& map, bool& flagInGame, const int* level);
         void deplacement(bool& flagInGame);
-        void wallDetection(Map map, const int* level);
+        void wallDetection(Map& map, const int* level);
         void stepOn(Map& map, const int* level, const int itemToDetect);
+        void setLife(int newLife);
+        int getLife();
 
     protected:
 
     private:
         int positionX;
         int positionY;
+        int life;
 
         //Permet de savoir si le personnage peut sauter
         bool canJump = false;

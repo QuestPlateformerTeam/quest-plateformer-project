@@ -1,9 +1,9 @@
 #include "Map.h"
 
-Map::Map()
+Map::Map(std::string filename)
 {
     // on crée la tilemap avec le niveau précédemment défini
-    if (!load("ressources/maps/map1.txt","ressources/graphics/tileset1.png", sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
+    if (!load(filename,"ressources/graphics/tileset1.png", sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
         std::cout<<"Erreur lors du chargement du tilset"<<std::endl;
 
     backgroundTexture.loadFromFile("ressources/graphics/background.png");

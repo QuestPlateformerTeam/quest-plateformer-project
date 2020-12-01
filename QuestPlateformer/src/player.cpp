@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-
+    this->life = 3;
 }
 
 Player::~Player()
@@ -15,6 +15,7 @@ Player::Player(int x, int y)
 {
     this->positionX = x;
     this->positionY = y;
+    this->life = 3;
 
     //Chargement de la spritesheet de Rabidja
     if (!texture.loadFromFile("ressources/graphics/deadpool.png"))
@@ -27,6 +28,15 @@ Player::Player(int x, int y)
         sprite.setTexture(texture);
         sprite.setTextureRect(sf::IntRect(PLAYER_HEIGHT,PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT));
     }
+}
+
+void Player::setLife(int newLife)
+{
+    this->life = newLife;
+}
+int Player::getLife()
+{
+    return life;
 }
 
 void Player::draw(sf::RenderWindow& window, Map map)
@@ -98,7 +108,7 @@ void Player::deplacement(bool& flagInGame)
         counterWalking = 0;
 }
 
-void Player::wallDetection(Map map, const int* level)
+void Player::wallDetection(Map& map, const int* level)
 {
     if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
     {
@@ -150,6 +160,12 @@ void Player::stepOn(Map& map, const int* level, const int itemToDetect)
         if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == itemToDetect )
         {
             map.load("ressources/maps/map2.txt","ressources/graphics/tileset1.png", sf::Vector2u(map.getTileSize(), map.getTileSize()), map.getNbTileByLine(), map.getNbTileByColumn());
+            this->positionX = map.getStartX();
+            this->positionY = map.getStartY();
+        }
+
+        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 128 )
+        {
             this->positionX = map.getStartX();
             this->positionY = map.getStartY();
         }
