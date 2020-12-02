@@ -28,10 +28,12 @@ class Map : public sf::Drawable, public sf::Transformable
         void setMap(std::string filename);
 
     protected:
+//40 en longueur 25
+
 
     private:
-        static const int SCREEN_WIDTH = 800;
-        static const int SCREEN_HEIGHT = 480;
+        static const int SCREEN_WIDTH = 1280;
+        static const int SCREEN_HEIGHT = 800;
         static const int TILE_SIZE = 32;
         static const int NB_TILE_BY_LINE = SCREEN_WIDTH/TILE_SIZE;
         static const int NB_TILE_BY_COLUMN = SCREEN_HEIGHT/TILE_SIZE;
@@ -47,8 +49,8 @@ class Map : public sf::Drawable, public sf::Transformable
 
         int tileNumber;
         int tiles[NB_TILE];
-        int startX = 20;
-        int startY = 400;
+        int startX = 50;
+        int startY = 600;
 };
 
 #endif // MAP_H

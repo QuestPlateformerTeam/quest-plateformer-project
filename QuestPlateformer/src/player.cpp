@@ -47,13 +47,14 @@ void Player::draw(sf::RenderWindow& window, Map map)
 
 void Player::update(Map& map, bool& flagInGame, const int* level)
 {
-    deplacement(flagInGame);
-    wallDetection(map, level);
+    deplacement(flagInGame,map,level);
+    //wallDetection(map, level);
     stepOn(map, level, EXIT_TILE);
 }
 
-void Player::deplacement(bool& flagInGame)
+void Player::deplacement(bool& flagInGame, Map& map,const int* level)
 {
+
      if(hasJump && !lockUp)
     {
         this->positionY-= velocityY*0.7;
@@ -106,29 +107,30 @@ void Player::deplacement(bool& flagInGame)
 
     if(counterWalking == 3)
         counterWalking = 0;
+    wallDetection(map, level);
 }
 
 void Player::wallDetection(Map& map, const int* level)
 {
     if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
     {
-        if (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )
+        if ((level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE) || (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == TILE_LEFT))
         {
             lockRight = true;
-            //std::cout<<"Collision a droite"<<std::endl;
+            std::cout<<"Collision a droite"<<std::endl;
         }else
         {
             lockRight = false;
         }
-        if (level[map.getTileNumber(positionX-20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )
+        if ((level[map.getTileNumber(positionX-20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE) || (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == TILE_RIGHT))
         {
             lockLeft = true;
-            //std::cout<<"Collision a gauche"<<std::endl;
+            std::cout<<"Collision a gauche"<<std::endl;
         }else
         {
             lockLeft = false;
         }
-        if (level[map.getTileNumber(positionX, positionY+25,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )
+        if ((level[map.getTileNumber(positionX, positionY+25,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )|| (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == TILE_HEIGHT))
         {
             lockDown = true;
             //std::cout<<"Collision en bas"<<std::endl;
@@ -162,13 +164,16 @@ void Player::stepOn(Map& map, const int* level, const int itemToDetect)
             map.load("ressources/maps/map2.txt","ressources/graphics/tileset1.png", sf::Vector2u(map.getTileSize(), map.getTileSize()), map.getNbTileByLine(), map.getNbTileByColumn());
             this->positionX = map.getStartX();
             this->positionY = map.getStartY();
+
         }
 
-        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 128 )
+        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 127 )
         {
             this->positionX = map.getStartX();
             this->positionY = map.getStartY();
         }
+
+
     }
 }
 

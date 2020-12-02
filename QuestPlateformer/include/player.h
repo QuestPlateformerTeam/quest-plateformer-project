@@ -12,7 +12,7 @@ class Player
         virtual ~Player();
         void draw(sf::RenderWindow& window, Map map);
         void update(Map& map, bool& flagInGame, const int* level);
-        void deplacement(bool& flagInGame);
+        void deplacement(bool& flagInGame, Map& map,const int* level);
         void wallDetection(Map& map, const int* level);
         void stepOn(Map& map, const int* level, const int itemToDetect);
         void setLife(int newLife);
@@ -52,7 +52,10 @@ class Player
         const int MAX_HEIGHT_JUMP = 80;
         const int PLAYER_HEIGHT = 50;
         const int PLAYER_WIDTH = 40;
-        const int WALL_TILE = 60;
+        const int WALL_TILE = 126;
+        const int TILE_LEFT = 123;
+        const int TILE_RIGHT = 122;
+        const int TILE_HEIGHT = 113;
         const int EXIT_TILE = 126;
 
 };

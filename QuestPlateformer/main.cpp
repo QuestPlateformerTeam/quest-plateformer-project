@@ -6,13 +6,26 @@
 #include "map.h"
 #include "player.h"
 #include "menu.h"
+#include "pickup.h"
 
 int main(int argc, char *argv[])
 {
-    Player player(20,400);
+    Player player(50,600);
     Map map("ressources/maps/map1.txt");
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
     bool flagInGame = false;
+    sf::Texture texturePiece;
+
+
+   /* //Charger une piece
+    if(texturePiece.loadFromFile("ressources/graphics/piece.png"))
+        std::cout<<"Erreur lors du chargement de la piece"<<std::endl;
+
+    vector<pickup>::const_iterator iter1;
+    vector<picup> pickupArray;
+
+    class pickup pickup1;*/
+
 
     sf::Music music;
     if (!music.openFromFile("ressources/songs/ansisys.wav"))

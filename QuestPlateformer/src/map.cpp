@@ -3,11 +3,11 @@
 Map::Map(std::string filename)
 {
     // on crée la tilemap avec le niveau précédemment défini
-    if (!load(filename,"ressources/graphics/tileset1.png", sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
+    if (!load(filename,"ressources/graphics/tileset3.png", sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
         std::cout<<"Erreur lors du chargement du tilset"<<std::endl;
 
     backgroundTexture.loadFromFile("ressources/graphics/background.png");
-    backgroundSprite.setScale(1.8,1.8);
+    backgroundSprite.setScale(2.8,2.8);
     backgroundSprite.setTexture(backgroundTexture);
 
 }

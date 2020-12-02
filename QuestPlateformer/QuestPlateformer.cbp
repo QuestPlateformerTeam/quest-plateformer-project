@@ -52,18 +52,16 @@
 			<Add directory="C:/SDL/SFML-2.5.1/lib" />
 		</Linker>
 		<Unit filename="cb.bmp" />
-		<Unit filename="include/homeMenu.h" />
 		<Unit filename="include/map.h" />
 		<Unit filename="include/menu.h" />
-		<Unit filename="include/optionsMenu.h" />
+		<Unit filename="include/pickup.h" />
 		<Unit filename="include/player.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="ressources/maps/map1.txt" />
 		<Unit filename="ressources/maps/map2.txt" />
-		<Unit filename="src/homeMenu.cpp" />
 		<Unit filename="src/map.cpp" />
 		<Unit filename="src/menu.cpp" />
-		<Unit filename="src/optionsMenu.cpp" />
+		<Unit filename="src/pickup.cpp" />
 		<Unit filename="src/player.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
