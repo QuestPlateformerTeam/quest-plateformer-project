@@ -56,7 +56,7 @@ void Map::resetGame()
 }
 
 //Cette fonction charge la map graphique sur la map de tuile vide
-bool Map::load( sf::Vector2u tileSize, unsigned int width, unsigned int height)
+bool Map::load(sf::Vector2u tileSize, unsigned int width, unsigned int height)
 {
 
     backgroundTexture.loadFromFile("ressources/graphics/background.png");

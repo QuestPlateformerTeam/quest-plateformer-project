@@ -16,12 +16,8 @@ Player::Player(int x, int y)
     this->positionX = x;
     this->positionY = y;
 
-    //Chargement de la spritesheet de Rabidja
     if (!texture.loadFromFile("ressources/graphics/deadpool.png"))
-    {
-        // Erreur
         std::cout << "Erreur durant le chargement du spritesheet du player." << std::endl;
-    }
     else
     {
         sprite.setTexture(texture);
@@ -143,7 +139,7 @@ void Player::wallDetection(Map& map, const int* level)
         if ((level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE) || (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == TILE_LEFT))
         {
             lockRight = true;
-            std::cout<<"Collision a droite"<<std::endl;
+            //std::cout<<"Collision a droite"<<std::endl;
         }else
         {
             lockRight = false;
@@ -151,7 +147,7 @@ void Player::wallDetection(Map& map, const int* level)
         if ((level[map.getTileNumber(positionX-20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE) || (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == TILE_RIGHT))
         {
             lockLeft = true;
-            std::cout<<"Collision a gauche"<<std::endl;
+            //std::cout<<"Collision a gauche"<<std::endl;
         }else
         {
             lockLeft = false;

@@ -57,7 +57,7 @@ class Player
         const int MAX_HEIGHT_JUMP = 80;
         const int PLAYER_HEIGHT = 50;
         const int PLAYER_WIDTH = 40;
-        const int WALL_TILE = 126;
+        const int WALL_TILE = 60;
         const int TILE_LEFT = 123;
         const int TILE_RIGHT = 122;
         const int TILE_HEIGHT = 113;

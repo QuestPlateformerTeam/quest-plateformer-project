@@ -18,6 +18,5 @@ Fireball::~Fireball()
 
 void Fireball::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-        // et on dessine enfin le tableau de vertex
         target.draw(fireball, states);
 }
