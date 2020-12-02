@@ -187,27 +187,12 @@ void Player::stepOn(Map& map, const int* level, const int itemToDetect)
     {
         if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == itemToDetect )
         {
-<<<<<<< Updated upstream
-            map.load("ressources/maps/map2.txt","ressources/graphics/tileset1.png", sf::Vector2u(map.getTileSize(), map.getTileSize()), map.getNbTileByLine(), map.getNbTileByColumn());
-            this->positionX = map.getStartX();
-            this->positionY = map.getStartY();
-
-        }
-
-        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 127 )
-        {
-            this->positionX = map.getStartX();
-            this->positionY = map.getStartY();
-        }
-
-=======
             map.changeToNextLevel();
             setPlayerAtStart(map);
         }
 
         if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 128 )
             isDead(map);
->>>>>>> Stashed changes
 
     }
 }

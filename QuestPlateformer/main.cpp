@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     Player player(20,400);
     Map map;
     HudLayer hud;
+    Fireball fireball;
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
     bool flagInGame = false;
 
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
             player.update(map, flagInGame, map.getTiles());
             player.draw(window,map);
             hud.draw(window, map, player);
-            window.draw();
+            window.draw(fireball);
 
         }
         else
