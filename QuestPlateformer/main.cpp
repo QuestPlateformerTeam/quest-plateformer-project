@@ -5,27 +5,17 @@
 #include <SFML/Audio.hpp>
 #include "map.h"
 #include "player.h"
+#include "hud.h"
+#include "fireball.h"
 #include "menu.h"
-#include "pickup.h"
 
 int main(int argc, char *argv[])
 {
-    Player player(50,600);
-    Map map("ressources/maps/map1.txt");
+    Player player(20,400);
+    Map map;
+    HudLayer hud;
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
     bool flagInGame = false;
-    sf::Texture texturePiece;
-
-
-   /* //Charger une piece
-    if(texturePiece.loadFromFile("ressources/graphics/piece.png"))
-        std::cout<<"Erreur lors du chargement de la piece"<<std::endl;
-
-    vector<pickup>::const_iterator iter1;
-    vector<picup> pickupArray;
-
-    class pickup pickup1;*/
-
 
     sf::Music music;
     if (!music.openFromFile("ressources/songs/ansisys.wav"))
@@ -59,6 +49,9 @@ int main(int argc, char *argv[])
             window.draw(map);
             player.update(map, flagInGame, map.getTiles());
             player.draw(window,map);
+            hud.draw(window, map, player);
+            window.draw();
+
         }
         else
             menu.draw(window);

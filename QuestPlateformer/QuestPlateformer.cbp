@@ -51,17 +51,31 @@
 			<Add library="dxguid" />
 			<Add directory="C:/SDL/SFML-2.5.1/lib" />
 		</Linker>
+<<<<<<< Updated upstream
 		<Unit filename="cb.bmp" />
 		<Unit filename="include/map.h" />
 		<Unit filename="include/menu.h" />
 		<Unit filename="include/pickup.h" />
+=======
+		<Unit filename="include/fireball.h" />
+		<Unit filename="include/hud.h" />
+		<Unit filename="include/map.h" />
+		<Unit filename="include/menu.h" />
+>>>>>>> Stashed changes
 		<Unit filename="include/player.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="ressources/maps/map1.txt" />
 		<Unit filename="ressources/maps/map2.txt" />
+<<<<<<< Updated upstream
 		<Unit filename="src/map.cpp" />
 		<Unit filename="src/menu.cpp" />
 		<Unit filename="src/pickup.cpp" />
+=======
+		<Unit filename="src/fireball.cpp" />
+		<Unit filename="src/hud.cpp" />
+		<Unit filename="src/map.cpp" />
+		<Unit filename="src/menu.cpp" />
+>>>>>>> Stashed changes
 		<Unit filename="src/player.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

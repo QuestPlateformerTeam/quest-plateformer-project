@@ -1,21 +1,15 @@
 #include "Map.h"
 
-Map::Map(std::string filename)
+Map::Map()
 {
     // on crée la tilemap avec le niveau précédemment défini
-    if (!load(filename,"ressources/graphics/tileset3.png", sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
+    if (!load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
         std::cout<<"Erreur lors du chargement du tilset"<<std::endl;
 
-    backgroundTexture.loadFromFile("ressources/graphics/background.png");
-    backgroundSprite.setScale(2.8,2.8);
-    backgroundSprite.setTexture(backgroundTexture);
 
 }
 
-Map::~Map()
-{
-    //dtor
-}
+Map::~Map(){}
 
 //Getters & Setters
 sf::Vertex* Map::getVertex(){return quad;}
@@ -28,15 +22,48 @@ int Map::getNbTileByColumn() const{return NB_TILE_BY_COLUMN;}
 int* Map::getTiles(){return tiles;}
 int Map::getStartX(){return startX;}
 int Map::getStartY(){return startY;}
-int Map::getTileNumber(int x, int y, int PLAYER_WIDTH, int PLAYER_HEIGHT)
+
+int Map::getLevel()
 {
-    return ((((int)(x+PLAYER_WIDTH/2)/TILE_SIZE))) + (((int)(y+PLAYER_HEIGHT/2)/TILE_SIZE)*NB_TILE_BY_LINE);
+    return this->level;
 }
 
-//Ici je charge le niveau souhaité dans ma liste de map
-void Map::setMap(std::string filename)
+void Map::setLevel(int newLevel)
 {
-    std::fstream myFile(filename, std::ios_base::in);
+    this->level = newLevel;
+}
+
+void Map::changeToNextLevel()
+{
+    setLevel(getLevel()+1);
+    if(this->level<=2)
+    {
+        levelToLoad = "ressources/maps/map"+std::to_string(this->level)+".txt";
+        load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn());
+    }else
+    {
+        levelToLoad = "ressources/maps/mapEnd.txt";
+        load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn());
+        flagEndGame = true;
+    }
+}
+
+void Map::resetGame()
+{
+    setLevel(1);
+    levelToLoad = "ressources/maps/map"+std::to_string(this->level)+".txt";
+    load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn());
+}
+
+//Cette fonction charge la map graphique sur la map de tuile vide
+bool Map::load( sf::Vector2u tileSize, unsigned int width, unsigned int height)
+{
+
+    backgroundTexture.loadFromFile("ressources/graphics/background.png");
+    backgroundSprite.setScale(1.8,1.8);
+    backgroundSprite.setTexture(backgroundTexture);
+
+    std::fstream myFile(this->levelToLoad, std::ios_base::in);
     std::string Line;
     if(myFile.is_open())
     {
@@ -52,16 +79,9 @@ void Map::setMap(std::string filename)
     }
     else
         std::cout<<"Erreur chargement map"<<std::endl;
-}
-
-//Cette fonction charge la map graphique sur la map de tuile vide
-bool Map::load(std::string mapToLoad,const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height)
-{
-    //Je récupère la map sous forme de tuile vide de 32x32
-    setMap(mapToLoad);
 
     // on charge la texture du tileset
-    if (!m_tileset.loadFromFile(tileset))
+    if (!m_tileset.loadFromFile("ressources/graphics/tileset1.png"))
         return false;
 
     // on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
@@ -95,30 +115,37 @@ bool Map::load(std::string mapToLoad,const std::string& tileset, sf::Vector2u ti
             quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
         }
 
-    if(!font.loadFromFile("ressources/police/arial.ttf"))
-    {
-        std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;
-    }
-
-    affichageVie.setString("Vies: 3   Level: 1");
-    affichageVie.setColor(sf::Color::White);
-    affichageVie.setFont(font);
-    affichageVie.setCharacterSize(25);
-    affichageVie.setPosition(20,10);
-
     return true;
 }
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    // on applique la transformation
-    states.transform *= getTransform();
-    // on applique la texture du tileset
-    states.texture = &m_tileset;
-    // et on dessine enfin le tableau de vertex
-    target.draw(backgroundSprite);
-    target.draw(m_vertices, states);
-    target.draw(affichageVie);
+    if(!flagEndGame)
+    {
+        // on applique la transformation
+        states.transform *= getTransform();
+        // on applique la texture du tileset
+        states.texture = &m_tileset;
+        // et on dessine enfin le tableau de vertex
+        target.draw(backgroundSprite);
+        target.draw(m_vertices, states);
+        target.draw(affichageVie);
+    }else
+    {
+         // on applique la transformation
+        states.transform *= getTransform();
+        // on applique la texture du tileset
+        states.texture = &m_tileset;
+        // et on dessine enfin le tableau de vertex
+        target.draw(m_vertices, states);
+    }
 }
+
+int Map::getTileNumber(int x, int y, int PLAYER_WIDTH, int PLAYER_HEIGHT)
+{
+    return ((((int)(x+PLAYER_WIDTH/2)/TILE_SIZE))) + (((int)(y+PLAYER_HEIGHT/2)/TILE_SIZE)*NB_TILE_BY_LINE);
+}
+
+
 
 

@@ -10,9 +10,9 @@
 class Map : public sf::Drawable, public sf::Transformable
 {
     public:
-        Map(std::string filename);
+        Map();
         virtual ~Map();
-        bool load(std::string mapToLoad,const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height);
+        bool load(sf::Vector2u tileSize, unsigned int width, unsigned int height);
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         sf::Vertex* getVertex();
         sf::VertexArray getVertices();
@@ -26,18 +26,24 @@ class Map : public sf::Drawable, public sf::Transformable
         int getStartY();
         int* getTiles();
         void setMap(std::string filename);
+        int getLevel();
+        void setLevel(int newLevel);
+        void changeToNextLevel();
+        void resetGame();
+
+
 
     protected:
-//40 en longueur 25
-
 
     private:
-        static const int SCREEN_WIDTH = 1280;
-        static const int SCREEN_HEIGHT = 800;
+        static const int SCREEN_WIDTH = 800;
+        static const int SCREEN_HEIGHT = 480;
         static const int TILE_SIZE = 32;
         static const int NB_TILE_BY_LINE = SCREEN_WIDTH/TILE_SIZE;
         static const int NB_TILE_BY_COLUMN = SCREEN_HEIGHT/TILE_SIZE;
         static const int NB_TILE = (NB_TILE_BY_LINE*NB_TILE_BY_COLUMN);
+        int level = 1;
+        std::string levelToLoad = "ressources/maps/map1.txt";
 
         sf::VertexArray m_vertices;
         sf::Texture m_tileset;
@@ -49,8 +55,10 @@ class Map : public sf::Drawable, public sf::Transformable
 
         int tileNumber;
         int tiles[NB_TILE];
-        int startX = 50;
-        int startY = 600;
+        int startX = 20;
+        int startY = 400;
+        bool flagEndGame = false;
+
 };
 
 #endif // MAP_H

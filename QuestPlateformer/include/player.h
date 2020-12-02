@@ -10,6 +10,8 @@ class Player
         Player();
         Player(int x, int y);
         virtual ~Player();
+        Player(const Player& player) { /* copy construction from rhs*/ }
+        Player& operator=(const Player& player);
         void draw(sf::RenderWindow& window, Map map);
         void update(Map& map, bool& flagInGame, const int* level);
         void deplacement(bool& flagInGame, Map& map,const int* level);
@@ -17,13 +19,16 @@ class Player
         void stepOn(Map& map, const int* level, const int itemToDetect);
         void setLife(int newLife);
         int getLife();
+        void setPlayerAtStart(Map map);
+        void isDead(Map& map);
 
     protected:
 
     private:
         int positionX;
         int positionY;
-        int life;
+        int life = 3;
+        bool flagGameOver = false;
 
         //Permet de savoir si le personnage peut sauter
         bool canJump = false;
