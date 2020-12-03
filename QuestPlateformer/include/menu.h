@@ -31,6 +31,8 @@ class Menu
         sf::RectangleShape rectangle;
         float width;
         float height;
+        sf::Texture backgroundTexture;
+        sf::Sprite backgroundSprite;
 };
 
 #endif // MENU_H

@@ -23,6 +23,10 @@ Menu::Menu(float width, float height)
     {
         std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;
     }
+    if(!backgroundTexture.loadFromFile("ressources/graphics/background.png"))
+    {
+        std::cout<<"Impossible de charger le background menu"<<std::endl;;
+    }
 
     menu[0].setColor(sf::Color::Red);
     menu[0].setString("Play");
@@ -45,6 +49,9 @@ Menu::Menu(float width, float height)
     rectangle.setFillColor(sf::Color::Black);
     rectangle.setOutlineColor(sf::Color::White);
     rectangle.setOutlineThickness(4);
+
+    backgroundSprite.setTexture(backgroundTexture);
+    backgroundSprite.setScale(sf::Vector2f(1.8,1.8));
 }
 
 void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window)
@@ -80,6 +87,7 @@ void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window)
 
 void Menu::draw(sf::RenderWindow & window){
 
+    window.draw(backgroundSprite);
     window.draw(title);
     for(int i = 0; i< MAX_NUMBER_OF_ITEMS; i++){
         float calculatedWidthRect = (this->width/2) - 150;
@@ -93,6 +101,8 @@ void Menu::draw(sf::RenderWindow & window){
         window.draw(rectangle);
         window.draw(menu[i]);
     }
+
+
 }
 
 void Menu::MoveUp(){

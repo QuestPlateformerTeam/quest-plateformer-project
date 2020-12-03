@@ -29,7 +29,7 @@ class Map : public sf::Drawable, public sf::Transformable
         void setMap(std::string filename);
         int getLevel();
         void setLevel(int newLevel);
-        void changeToNextLevel();
+        void changeToNextLevel(bool& flagEndGame);
         void resetGame();
 
 
@@ -58,7 +58,6 @@ class Map : public sf::Drawable, public sf::Transformable
         int tiles[NB_TILE];
         int startX = 20;
         int startY = 400;
-        bool flagEndGame = false;
 
         std::vector<Coin*> coinList;
 

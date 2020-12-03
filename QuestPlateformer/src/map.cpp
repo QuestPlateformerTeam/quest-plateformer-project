@@ -33,18 +33,17 @@ void Map::setLevel(int newLevel)
     this->level = newLevel;
 }
 
-void Map::changeToNextLevel()
+void Map::changeToNextLevel(bool& flagEndGame)
 {
     setLevel(getLevel()+1);
-    if(this->level<=3)
+    if(this->level<=2)
     {
         levelToLoad = "ressources/maps/map"+std::to_string(this->level)+".txt";
         load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn());
     }else
     {
-        levelToLoad = "ressources/maps/mapEnd.txt";
-        load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn());
         flagEndGame = true;
+
     }
 }
 
@@ -119,8 +118,6 @@ bool Map::load(sf::Vector2u tileSize, unsigned int width, unsigned int height)
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if(!flagEndGame)
-    {
         // on applique la transformation
         states.transform *= getTransform();
         // on applique la texture du tileset
@@ -128,15 +125,6 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
         // et on dessine enfin le tableau de vertex
         target.draw(backgroundSprite);
         target.draw(m_vertices, states);
-    }else
-    {
-         // on applique la transformation
-        states.transform *= getTransform();
-        // on applique la texture du tileset
-        states.texture = &m_tileset;
-        // et on dessine enfin le tableau de vertex
-        target.draw(m_vertices, states);
-    }
 }
 
 int Map::getTileNumber(int x, int y, int PLAYER_WIDTH, int PLAYER_HEIGHT)

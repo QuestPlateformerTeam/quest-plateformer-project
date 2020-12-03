@@ -10,6 +10,7 @@
 #include "fireballContainer.h"
 #include "menu.h"
 #include "coin.h"
+#include "endGame.h"
 #include "coinContainer.h"
 
 int main(int argc, char *argv[])
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     CoinContainer coinContainer(map);
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
     bool flagInGame = false;
+    bool flagEndGame = false;
 
     sf::Music music;
     if (!music.openFromFile("ressources/songs/ansisys.wav"))
@@ -49,14 +51,18 @@ int main(int argc, char *argv[])
             }
         }
         window.clear();
-        if(flagInGame)
+        if(flagInGame && !flagEndGame)
         {
             window.draw(map);
             hud.draw(window, map, player);
             fireballContainer.draw(window);
             coinContainer.draw(window);
-            player.update(map, flagInGame, map.getTiles(), fireballContainer, coinContainer);
+            player.update(map, flagInGame, map.getTiles(), fireballContainer, coinContainer,flagEndGame);
             player.draw(window,map);
+        }else if(flagEndGame)
+        {
+            EndGame endGame;
+            endGame.draw(window);
         }
         else
             menu.draw(window);

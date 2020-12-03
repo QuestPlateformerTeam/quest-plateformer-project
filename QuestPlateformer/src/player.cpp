@@ -65,7 +65,7 @@ void Player::draw(sf::RenderWindow& window, Map map)
     window.draw(sprite);
 }
 
-void Player::update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer)
+void Player::update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer, bool& flagEndGame)
 {
     deplacement(flagInGame,map,level);
 
@@ -74,7 +74,7 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
     {
         if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == EXIT_TILE && coinContainer.isAllLooted() )
         {
-            map.changeToNextLevel();
+            map.changeToNextLevel(flagEndGame);
             setPlayerAtStart(map);
             fireballContainer.resetAll();
             coinContainer.loadConfig(map);
@@ -86,16 +86,18 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
         {
             isDead(map);
             fireballContainer.resetAll();
+            coinContainer.resetAll();
         }
 
     }
 
     for(int i = 0; i<=fireballContainer.getNbFireball(); i++)
     {
-        if (Collision::PixelPerfectTest(sprite,fireballContainer.getOneFireball(i).getSprite(),128))
+        if (Collision::PixelPerfectTest(sprite,fireballContainer.getOneFireball(i).getSprite()))
         {
             isDead(map);
             fireballContainer.resetAll();
+            coinContainer.resetAll();
             hasJump = false;
         }
     }
