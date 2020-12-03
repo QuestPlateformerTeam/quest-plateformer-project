@@ -73,12 +73,14 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
             map.changeToNextLevel();
             setPlayerAtStart(map);
             fireballContainer.resetAll();
+            coinContainer.resetAll();
         }
 
         if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 128 )
         {
             isDead(map);
             fireballContainer.resetAll();
+            coinContainer.resetAll();
         }
 
     }
@@ -88,6 +90,7 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
         if (sprite.getGlobalBounds().intersects(fireballContainer.getOneFireball(i).getGlobalForIntersect()))
         {
             isDead(map);
+            coinContainer.resetAll();
             fireballContainer.resetAll();
             hasJump = false;
         }

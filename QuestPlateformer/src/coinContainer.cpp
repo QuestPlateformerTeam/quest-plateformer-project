@@ -50,3 +50,8 @@ Coin& CoinContainer::getThisCoin(int i)
     return *coinList.at(i);
 }
 
+void CoinContainer::resetAll()
+{
+    currentCoinToDisplay=0;
+}
+

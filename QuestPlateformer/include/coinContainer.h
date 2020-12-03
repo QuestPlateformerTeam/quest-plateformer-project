@@ -14,6 +14,7 @@ class CoinContainer
         int getNbCoin();
         sf::Sprite getOneCoin(int i);
         Coin& getThisCoin(int i);
+        void resetAll();
 
     protected:
 
