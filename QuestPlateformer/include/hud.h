@@ -18,7 +18,10 @@ class HudLayer
     private:
     sf::Font font;
     sf::Text lifeDisplayed;
-    std::string fullString;
+    sf::Text timeDisplayed;
+    std::string fullStringLife;
+    std::string fullStringTime;
+    sf::Clock clock;
 };
 
 #endif // HUDLAYER_H

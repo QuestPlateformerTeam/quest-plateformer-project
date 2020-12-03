@@ -1,6 +1,7 @@
 #include "player.h"
 #include "math.h"
 
+
 Player::Player(int x, int y)
 {
     this->positionX = x;
@@ -76,6 +77,7 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
             map.changeToNextLevel();
             setPlayerAtStart(map);
             fireballContainer.resetAll();
+            coinContainer.loadConfig(map);
             coinContainer.resetAll();
             coinContainer.setLooted(false);
         }
@@ -84,17 +86,15 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
         {
             isDead(map);
             fireballContainer.resetAll();
-            coinContainer.resetAll();
         }
 
     }
 
     for(int i = 0; i<=fireballContainer.getNbFireball(); i++)
     {
-        if (sprite.getGlobalBounds().intersects(fireballContainer.getOneFireball(i).getGlobalForIntersect()))
+        if (Collision::PixelPerfectTest(sprite,fireballContainer.getOneFireball(i).getSprite(),128))
         {
             isDead(map);
-            coinContainer.resetAll();
             fireballContainer.resetAll();
             hasJump = false;
         }
@@ -102,10 +102,8 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
 
     for(int i = 0; i<=coinContainer.getNbCoin(); i++)
     {
-        if (sprite.getGlobalBounds().intersects(coinContainer.getOneCoin(i).getGlobalBounds()) && coinContainer.getThisCoin(i).getDisplay())
-        {
+        if(Collision::PixelPerfectTest(sprite,coinContainer.getOneCoin(i),128) && coinContainer.getThisCoin(i).getDisplay())
             coinContainer.changeToNextCoin();
-        }
     }
 }
 

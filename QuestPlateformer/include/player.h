@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "coinContainer.h"
+#include "Collision.h"
 
 class Player
 {
@@ -67,6 +68,8 @@ class Player
         const int PLAYER_WIDTH = 40;
 
         const int EXIT_TILE = 186;
+
+
 
 };
 

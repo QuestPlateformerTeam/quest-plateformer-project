@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     Map map;
     HudLayer hud;
     FireballContainer fireballContainer;
-    CoinContainer coinContainer;
+    CoinContainer coinContainer(map);
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
     bool flagInGame = false;
 

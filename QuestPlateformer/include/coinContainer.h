@@ -1,13 +1,17 @@
 #ifndef COINCONTAINER_H
 #define COINCONTAINER_H
 #include <vector>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include "coin.h"
+#include "map.h"
 #include <SFML/Graphics.hpp>
 
 class CoinContainer
 {
     public:
-        CoinContainer();
+        CoinContainer(Map& map);
         virtual ~CoinContainer();
         void draw(sf::RenderWindow& window);
         void changeToNextCoin();
@@ -17,6 +21,7 @@ class CoinContainer
         void resetAll();
         bool isAllLooted();
         void setLooted(bool b);
+        void loadConfig(Map& map);
 
     protected:
 

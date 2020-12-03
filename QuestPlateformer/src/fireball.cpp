@@ -31,9 +31,9 @@ void Fireball::setPositionY(int newY)
 }
 
 
-sf::FloatRect Fireball::getGlobalForIntersect()
+sf::Sprite Fireball::getSprite()
 {
-    return fireball.getGlobalBounds();
+    return fireball;
 }
 
 void Fireball::reset()

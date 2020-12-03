@@ -11,10 +11,10 @@ class Fireball
     public:
         Fireball();
         virtual ~Fireball();
-        Fireball(const Fireball& f1){}
+        Fireball(const Fireball& f1);
         void draw(sf::RenderWindow& window);
         void setPositionY(int newY);
-        sf::FloatRect getGlobalForIntersect();
+        sf::Sprite getSprite();
         void reset();
         int getPositionY(){return positionY;};
 
