@@ -23,6 +23,8 @@ class Player
         void setPlayerAtStart(Map map);
         void isDead(Map& map);
 
+
+
     protected:
 
     private:
@@ -47,6 +49,11 @@ class Player
         bool hasJump =false;
         bool isTopOfJump = true;
         int fromHeight;
+        int WALL_TILE = 90;
+        /*int TILE_LEFT = 123;
+        int TILE_RIGHT = 122;
+        int TILE_HEIGHT = 113;*/
+        int TILE_KILL = 188;
 
         //Spritesheet de Rabidja
         sf::Texture texture;
@@ -58,11 +65,8 @@ class Player
         const int MAX_HEIGHT_JUMP = 80;
         const int PLAYER_HEIGHT = 50;
         const int PLAYER_WIDTH = 40;
-        const int WALL_TILE = 90;
-        const int TILE_LEFT = 123;
-        const int TILE_RIGHT = 122;
-        const int TILE_HEIGHT = 113;
-        const int EXIT_TILE = 126;
+
+        const int EXIT_TILE = 186;
 
 };
 

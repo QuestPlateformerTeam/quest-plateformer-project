@@ -36,7 +36,7 @@ void Map::setLevel(int newLevel)
 void Map::changeToNextLevel()
 {
     setLevel(getLevel()+1);
-    if(this->level<=2)
+    if(this->level<=3)
     {
         levelToLoad = "ressources/maps/map"+std::to_string(this->level)+".txt";
         load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn());

@@ -13,6 +13,7 @@ Player::Player(int x, int y)
         sprite.setTexture(texture);
         sprite.setTextureRect(sf::IntRect(PLAYER_HEIGHT,PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT));
     }
+
 }
 
 Player::~Player()
@@ -47,6 +48,7 @@ void Player::isDead(Map& map)
 
 }
 
+
 void Player::setLife(int newLife)
 {
     this->life = newLife;
@@ -66,6 +68,7 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
 {
     deplacement(flagInGame,map,level);
 
+
     if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
     {
         if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == EXIT_TILE && coinContainer.isAllLooted() )
@@ -77,7 +80,7 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
             coinContainer.setLooted(false);
         }
 
-        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 188 )
+        if ((level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)]) == TILE_KILL )
         {
             isDead(map);
             fireballContainer.resetAll();
@@ -160,15 +163,16 @@ void Player::deplacement(bool& flagInGame, Map& map,const int* level)
 
     if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
     {
-        if ((level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE) || (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == TILE_LEFT))
-        {
+
+        if (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE)
+            {
             lockRight = true;
             //std::cout<<"Collision a droite"<<std::endl;
         }else
         {
             lockRight = false;
         }
-        if ((level[map.getTileNumber(positionX-20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE) || (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == TILE_RIGHT))
+        if (level[map.getTileNumber(positionX-20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE)
         {
             lockLeft = true;
             //std::cout<<"Collision a gauche"<<std::endl;
@@ -176,7 +180,7 @@ void Player::deplacement(bool& flagInGame, Map& map,const int* level)
         {
             lockLeft = false;
         }
-        if ((level[map.getTileNumber(positionX, positionY+25,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )|| (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == TILE_HEIGHT))
+        if ((level[map.getTileNumber(positionX, positionY+25,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE))
         {
             lockDown = true;
             //std::cout<<"Collision en bas"<<std::endl;
