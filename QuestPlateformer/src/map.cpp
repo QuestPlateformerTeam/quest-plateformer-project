@@ -80,7 +80,7 @@ bool Map::load(sf::Vector2u tileSize, unsigned int width, unsigned int height)
         std::cout<<"Erreur chargement map"<<std::endl;
 
     // on charge la texture du tileset
-    if (!m_tileset.loadFromFile("ressources/graphics/tileset1.png"))
+    if (!m_tileset.loadFromFile("ressources/graphics/tileset3.png"))
         return false;
 
     // on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau

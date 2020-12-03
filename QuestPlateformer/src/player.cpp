@@ -77,7 +77,7 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
             coinContainer.setLooted(false);
         }
 
-        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 128 )
+        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 188 )
         {
             isDead(map);
             fireballContainer.resetAll();
