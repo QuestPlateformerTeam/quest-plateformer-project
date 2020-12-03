@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include "coin.h"
 
 
 class Map : public sf::Drawable, public sf::Transformable
@@ -58,6 +59,8 @@ class Map : public sf::Drawable, public sf::Transformable
         int startX = 20;
         int startY = 400;
         bool flagEndGame = false;
+
+        std::vector<Coin*> coinList;
 
 };
 

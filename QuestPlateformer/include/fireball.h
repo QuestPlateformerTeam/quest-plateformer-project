@@ -2,8 +2,6 @@
 #define FIREBALL_H
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -23,7 +21,6 @@ class Fireball
     protected:
 
     private:
-        //sf::RectangleShape fireball;
         sf::Texture texture;
         sf::Sprite fireball;
         int positionX;

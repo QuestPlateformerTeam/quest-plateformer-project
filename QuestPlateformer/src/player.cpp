@@ -62,7 +62,7 @@ void Player::draw(sf::RenderWindow& window, Map map)
     window.draw(sprite);
 }
 
-void Player::update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer)
+void Player::update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer)
 {
     deplacement(flagInGame,map,level);
 
@@ -90,6 +90,14 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
             isDead(map);
             fireballContainer.resetAll();
             hasJump = false;
+        }
+    }
+
+    for(int i = 0; i<=coinContainer.getNbCoin(); i++)
+    {
+        if (sprite.getGlobalBounds().intersects(coinContainer.getOneCoin(i).getGlobalBounds()) && coinContainer.getThisCoin(i).getDisplay())
+        {
+            coinContainer.changeToNextCoin();
         }
     }
 }

@@ -128,7 +128,6 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
         // et on dessine enfin le tableau de vertex
         target.draw(backgroundSprite);
         target.draw(m_vertices, states);
-        target.draw(affichageVie);
     }else
     {
          // on applique la transformation

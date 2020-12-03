@@ -80,17 +80,6 @@ void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window)
 
 void Menu::draw(sf::RenderWindow & window){
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-
-    }
-
-
     window.draw(title);
     for(int i = 0; i< MAX_NUMBER_OF_ITEMS; i++){
         float calculatedWidthRect = (this->width/2) - 150;

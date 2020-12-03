@@ -22,7 +22,6 @@ class FireballContainer
 
     private:
         vector<Fireball*> fireballList;
-        sf::Clock clock; // démarre le chrono
         const int NB_FIREBALL = 5;
 };
 

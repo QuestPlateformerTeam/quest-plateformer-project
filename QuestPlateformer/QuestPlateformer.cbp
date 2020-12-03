@@ -51,6 +51,8 @@
 			<Add library="dxguid" />
 			<Add directory="C:/SDL/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="include/coin.h" />
+		<Unit filename="include/coinContainer.h" />
 		<Unit filename="include/fireball.h" />
 		<Unit filename="include/fireballContainer.h" />
 		<Unit filename="include/hud.h" />
@@ -60,6 +62,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="ressources/maps/map1.txt" />
 		<Unit filename="ressources/maps/map2.txt" />
+		<Unit filename="src/coin.cpp" />
+		<Unit filename="src/coinContainer.cpp" />
 		<Unit filename="src/fireball.cpp" />
 		<Unit filename="src/fireballContainer.cpp" />
 		<Unit filename="src/hud.cpp" />

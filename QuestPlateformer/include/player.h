@@ -5,6 +5,7 @@
 #include "fireballContainer.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "coinContainer.h"
 
 class Player
 {
@@ -15,7 +16,7 @@ class Player
         Player(const Player& player) { /* copy construction from rhs*/ }
         Player& operator=(const Player& player);
         void draw(sf::RenderWindow& window, Map map);
-        void update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer);
+        void update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer);
         void deplacement(bool& flagInGame, Map& map,const int* level);
         void setLife(int newLife);
         int getLife();

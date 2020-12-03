@@ -9,14 +9,16 @@
 #include "fireball.h"
 #include "fireballContainer.h"
 #include "menu.h"
+#include "coin.h"
+#include "coinContainer.h"
 
 int main(int argc, char *argv[])
 {
     Player player(20,400);
     Map map;
     HudLayer hud;
-    Fireball fireball;
     FireballContainer fireballContainer;
+    CoinContainer coinContainer;
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
     bool flagInGame = false;
 
@@ -50,10 +52,11 @@ int main(int argc, char *argv[])
         if(flagInGame)
         {
             window.draw(map);
-            player.update(map, flagInGame, map.getTiles(), fireballContainer);
-            player.draw(window,map);
             hud.draw(window, map, player);
             fireballContainer.draw(window);
+            coinContainer.draw(window);
+            player.update(map, flagInGame, map.getTiles(), fireballContainer, coinContainer);
+            player.draw(window,map);
         }
         else
             menu.draw(window);
