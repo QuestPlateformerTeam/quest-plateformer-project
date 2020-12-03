@@ -28,6 +28,8 @@ void CoinContainer::draw(sf::RenderWindow& window)
                 coinList.at(i)->draw(window);
         }
     }
+    else
+        flagAllCoinLoot = true;
 }
 
 void CoinContainer::changeToNextCoin()
@@ -53,5 +55,15 @@ Coin& CoinContainer::getThisCoin(int i)
 void CoinContainer::resetAll()
 {
     currentCoinToDisplay=0;
+}
+
+bool CoinContainer::isAllLooted()
+{
+    return flagAllCoinLoot;
+}
+
+void CoinContainer::setLooted(bool b)
+{
+    flagAllCoinLoot = false;
 }
 

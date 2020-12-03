@@ -15,6 +15,8 @@ class CoinContainer
         sf::Sprite getOneCoin(int i);
         Coin& getThisCoin(int i);
         void resetAll();
+        bool isAllLooted();
+        void setLooted(bool b);
 
     protected:
 
@@ -22,6 +24,7 @@ class CoinContainer
         std::vector<Coin*> coinList;
         const int NB_COIN = 3;
         int currentCoinToDisplay = 0;
+        bool flagAllCoinLoot = false;
 };
 
 #endif // COINCONTAINER_H

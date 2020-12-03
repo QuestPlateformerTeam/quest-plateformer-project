@@ -5,7 +5,7 @@ Fireball::Fireball()
     if(!texture.loadFromFile("ressources/graphics/flame.png"))
         std::cout<<"Erreur chargement flamme"<<std::endl;
     fireball.setTexture(texture);
-    fireball.scale(1.5,1.5);
+    fireball.setScale(1.5,1.5);
 
     reset();
     fireball.setPosition(positionX, positionY);

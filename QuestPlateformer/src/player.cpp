@@ -68,12 +68,13 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
 
     if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
     {
-        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == EXIT_TILE )
+        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == EXIT_TILE && coinContainer.isAllLooted() )
         {
             map.changeToNextLevel();
             setPlayerAtStart(map);
             fireballContainer.resetAll();
             coinContainer.resetAll();
+            coinContainer.setLooted(false);
         }
 
         if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 128 )
