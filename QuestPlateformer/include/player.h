@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "map.h"
+#include "fireball.h"
+#include "fireballContainer.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
@@ -13,10 +15,8 @@ class Player
         Player(const Player& player) { /* copy construction from rhs*/ }
         Player& operator=(const Player& player);
         void draw(sf::RenderWindow& window, Map map);
-        void update(Map& map, bool& flagInGame, const int* level);
+        void update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer);
         void deplacement(bool& flagInGame, Map& map,const int* level);
-        void wallDetection(Map& map, const int* level);
-        void stepOn(Map& map, const int* level, const int itemToDetect);
         void setLife(int newLife);
         int getLife();
         void setPlayerAtStart(Map map);

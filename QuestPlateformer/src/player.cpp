@@ -1,16 +1,6 @@
 #include "player.h"
 #include "math.h"
 
-Player::Player()
-{
-    this->life = 3;
-}
-
-Player::~Player()
-{
-    //dtor
-}
-
 Player::Player(int x, int y)
 {
     this->positionX = x;
@@ -23,6 +13,11 @@ Player::Player(int x, int y)
         sprite.setTexture(texture);
         sprite.setTextureRect(sf::IntRect(PLAYER_HEIGHT,PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT));
     }
+}
+
+Player::~Player()
+{
+    //dtor
 }
 
 void Player::setPlayerAtStart(Map map)
@@ -67,11 +62,36 @@ void Player::draw(sf::RenderWindow& window, Map map)
     window.draw(sprite);
 }
 
-void Player::update(Map& map, bool& flagInGame, const int* level)
+void Player::update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer)
 {
     deplacement(flagInGame,map,level);
-    //wallDetection(map, level);
-    stepOn(map, level, EXIT_TILE);
+
+    if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
+    {
+        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == EXIT_TILE )
+        {
+            map.changeToNextLevel();
+            setPlayerAtStart(map);
+            fireballContainer.resetAll();
+        }
+
+        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 128 )
+        {
+            isDead(map);
+            fireballContainer.resetAll();
+        }
+
+    }
+
+    for(int i = 0; i<=fireballContainer.getNbFireball(); i++)
+    {
+        if (sprite.getGlobalBounds().intersects(fireballContainer.getOneFireball(i).getGlobalForIntersect()))
+        {
+            isDead(map);
+            fireballContainer.resetAll();
+            hasJump = false;
+        }
+    }
 }
 
 void Player::deplacement(bool& flagInGame, Map& map,const int* level)
@@ -97,6 +117,7 @@ void Player::deplacement(bool& flagInGame, Map& map,const int* level)
             }
     }
 
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !lockRight)
     {
         positionX+= MOVESPEED;
@@ -119,21 +140,12 @@ void Player::deplacement(bool& flagInGame, Map& map,const int* level)
         canJump = false;
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !lockDown)
-    {
-        positionY+= MOVESPEED;
-    }
-
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         flagInGame = false;
 
     if(counterWalking == 3)
         counterWalking = 0;
-    wallDetection(map, level);
-}
 
-void Player::wallDetection(Map& map, const int* level)
-{
     if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
     {
         if ((level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE) || (level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == TILE_LEFT))
@@ -174,22 +186,6 @@ void Player::wallDetection(Map& map, const int* level)
         {
             lockUp = false;
         }
-    }
-}
-
-void Player::stepOn(Map& map, const int* level, const int itemToDetect)
-{
-    if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
-    {
-        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == itemToDetect )
-        {
-            map.changeToNextLevel();
-            setPlayerAtStart(map);
-        }
-
-        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == 128 )
-            isDead(map);
-
     }
 }
 

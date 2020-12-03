@@ -67,7 +67,6 @@ bool Map::load(sf::Vector2u tileSize, unsigned int width, unsigned int height)
     std::string Line;
     if(myFile.is_open())
     {
-        std::cout<<"map chargee"<<std::endl;
         for (int i = 0; i < NB_TILE ; i++) //Récupère les valeurs pour chaque tuile
         {
             getline(myFile,Line,','); //Récupère les valeurs une par une séparée par le délimiteur ','
