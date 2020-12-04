@@ -54,7 +54,7 @@ Menu::Menu(float width, float height)
     backgroundSprite.setScale(sf::Vector2f(1.8,1.8));
 }
 
-void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window)
+void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, HudLayer& hud)
 {
     if(!flagInGame)
     {
@@ -67,11 +67,12 @@ void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window)
                 MoveDown();
                 break;
             case sf::Keyboard::Return:
-                switch(GetPressedItem())
+                switch(selectedItemIndex)
                 {
                     case 0:
                         std::cout << "Play button has been pressed" <<std::endl;
                         flagInGame = true;
+                        hud.restartChrono();
                         break;
                     case 1:
                         std::cout << "Options button has been pressed" <<std::endl;
@@ -101,8 +102,6 @@ void Menu::draw(sf::RenderWindow & window){
         window.draw(rectangle);
         window.draw(menu[i]);
     }
-
-
 }
 
 void Menu::MoveUp(){

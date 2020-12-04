@@ -23,12 +23,16 @@ int main(int argc, char *argv[])
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
     bool flagInGame = false;
     bool flagEndGame = false;
+    EndGame endGame(map.getScreenWidth(),map.getScreenHeight());
+    bool flagGameOver = false;
 
     sf::Music music;
-    if (!music.openFromFile("ressources/songs/ansisys.wav"))
+    if (!music.openFromFile("ressources/songs/ansisys.ogg"))
         std::cout<<"Erreur lors du chargement de la musique"<<std::endl;
     music.setVolume(10.f);
+    music.setLoop(true);
     music.play();
+
 
     sf::RenderWindow window(sf::VideoMode(map.getScreenWidth(), map.getScreenHeight(), map.getTileSize()), "Quest Plateformer | Neven - Leveau - Lopez - Moins ");
     window.setFramerateLimit(60);
@@ -47,7 +51,7 @@ int main(int argc, char *argv[])
                     window.close();
                     break;
                 case sf::Event::KeyReleased:
-                    menu.update(event, flagInGame, window);
+                    menu.update(event, flagInGame, window, hud);
             }
         }
         window.clear();
@@ -57,12 +61,13 @@ int main(int argc, char *argv[])
             hud.draw(window, map, player);
             fireballContainer.draw(window);
             coinContainer.draw(window);
-            player.update(map, flagInGame, map.getTiles(), fireballContainer, coinContainer,flagEndGame);
+            player.update(map, flagInGame, map.getTiles(), fireballContainer, coinContainer,flagEndGame, flagGameOver);
             player.draw(window,map);
-        }else if(flagEndGame)
+        }else if(flagEndGame || flagGameOver)
         {
-            EndGame endGame;
-            endGame.draw(window);
+            flagInGame = false;
+            endGame.update(event,flagInGame,window,flagEndGame);
+            endGame.draw(window,hud.getChrono());
         }
         else
             menu.draw(window);

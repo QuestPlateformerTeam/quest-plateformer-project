@@ -12,6 +12,8 @@ class HudLayer
         HudLayer();
         virtual ~HudLayer();
         void draw(sf::RenderWindow& window, Map map, Player& player);
+        void restartChrono();
+        sf::Text getChrono(){return timeDisplayed;};
 
     protected:
 

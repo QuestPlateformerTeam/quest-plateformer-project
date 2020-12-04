@@ -2,6 +2,7 @@
 #define MENU_H
 #include <iostream>
 #include <string>
+#include "hud.h"
 #include "SFML/Graphics.hpp"
 #define MAX_NUMBER_OF_ITEMS 3
 
@@ -15,10 +16,7 @@ class Menu
         void draw(sf::RenderWindow &window);
         void MoveUp();
         void MoveDown();
-        int GetPressedItem(){ return selectedItemIndex;};
-        float getWidth();
-        float getHeight();
-        void update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window);
+        void update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, HudLayer& hud);
 
     protected:
 

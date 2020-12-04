@@ -30,21 +30,17 @@ namespace Collision
             }
             else
                 mask = pair->second;
-
             return mask;
         }
 
         sf::Uint8* CreateMask (const sf::Texture* tex, const sf::Image& img) {
             sf::Uint8* mask = new sf::Uint8[tex->getSize().y*tex->getSize().x];
-
             for (unsigned int y = 0; y<tex->getSize().y; y++)
             {
                 for (unsigned int x = 0; x<tex->getSize().x; x++)
                     mask[x+y*tex->getSize().x] = img.getPixel(x,y).a;
             }
-
             Bitmasks.insert(std::pair<const sf::Texture*, sf::Uint8*>(tex,mask));
-
             return mask;
         }
     private:
@@ -77,7 +73,6 @@ namespace Collision
                         if (Bitmasks.GetPixel(mask1, Object1.getTexture(), (int)(o1v.x)+O1SubRect.left, (int)(o1v.y)+O1SubRect.top) > AlphaLimit &&
                             Bitmasks.GetPixel(mask2, Object2.getTexture(), (int)(o2v.x)+O2SubRect.left, (int)(o2v.y)+O2SubRect.top) > AlphaLimit)
                             return true;
-
                     }
                 }
             }

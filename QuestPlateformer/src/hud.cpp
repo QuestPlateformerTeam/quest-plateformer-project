@@ -15,11 +15,17 @@ HudLayer::HudLayer()
     timeDisplayed.setColor(sf::Color::White);
     timeDisplayed.setPosition(sf::Vector2f(650,10));
     timeDisplayed.setCharacterSize(25);
+
 }
 
 HudLayer::~HudLayer()
 {
     //dtor
+}
+
+void HudLayer::restartChrono()
+{
+    clock.restart();
 }
 
 void HudLayer::draw(sf::RenderWindow& window, Map map , Player& player)

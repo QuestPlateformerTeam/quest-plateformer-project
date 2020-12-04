@@ -33,7 +33,7 @@ void Map::setLevel(int newLevel)
     this->level = newLevel;
 }
 
-void Map::changeToNextLevel(bool& flagEndGame)
+void Map::changeToNextLevel(bool& flagEndGame, bool& flagInGame)
 {
     setLevel(getLevel()+1);
     if(this->level<=2)
@@ -43,7 +43,8 @@ void Map::changeToNextLevel(bool& flagEndGame)
     }else
     {
         flagEndGame = true;
-
+        flagInGame = false;
+        resetGame();
     }
 }
 

@@ -17,12 +17,12 @@ class Player
         Player(const Player& player) { /* copy construction from rhs*/ }
         Player& operator=(const Player& player);
         void draw(sf::RenderWindow& window, Map map);
-        void update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer,bool& flagEndGame);
+        void update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer,bool& flagEndGame, bool& flagGameOver);
         void deplacement(bool& flagInGame, Map& map,const int* level);
         void setLife(int newLife);
         int getLife();
         void setPlayerAtStart(Map map);
-        void isDead(Map& map);
+        void isDead(Map& map, bool& flagGameOver, bool& flagInGame);
 
 
 
@@ -32,7 +32,6 @@ class Player
         int positionX;
         int positionY;
         int life = 3;
-        bool flagGameOver = false;
 
         //Permet de savoir si le personnage peut sauter
         bool canJump = false;
@@ -60,13 +59,14 @@ class Player
         sf::Texture texture;
         sf::Sprite sprite;
         int timee = 0;
+        sf::Music soundDeath;
+        sf::Music soundCoin;
 
         //Constantes
         const int MOVESPEED = 3;
         const int MAX_HEIGHT_JUMP = 80;
         const int PLAYER_HEIGHT = 50;
         const int PLAYER_WIDTH = 40;
-
         const int EXIT_TILE = 186;
 
 

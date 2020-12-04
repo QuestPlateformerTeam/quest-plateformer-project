@@ -29,7 +29,7 @@ class Map : public sf::Drawable, public sf::Transformable
         void setMap(std::string filename);
         int getLevel();
         void setLevel(int newLevel);
-        void changeToNextLevel(bool& flagEndGame);
+        void changeToNextLevel(bool& flagEndGame, bool& flagInGame);
         void resetGame();
 
 
