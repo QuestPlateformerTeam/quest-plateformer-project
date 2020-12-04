@@ -2,14 +2,15 @@
 
 EndGame::EndGame(float width, float height)
 {
-    this->width = width;
-    this->height = height;
+    this->width = width;//Je récupère la largeur de ma window
+    this->height = height;//Je récupère la hauteur de ma window
 
-    if(!font.loadFromFile("ressources/police/arial.ttf"))
-    {
-        std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;
-    }
+    if(!font.loadFromFile("ressources/police/arial.ttf"))//Je charge ma police d'écriture
+        std::cout<<"Impossible de charger la police d'ecriture"<<std::endl; //Msg d'erreur console
 
+    /*
+        Je prépare les textes pour mon menu
+    */
 
     menu[0].setColor(sf::Color::Red);
     menu[0].setString("Play again");
@@ -17,7 +18,7 @@ EndGame::EndGame(float width, float height)
     menu[1].setColor(sf::Color::White);
     menu[1].setString("Back to menu");
 
-    selectedItemIndex = 0;
+    selectedItemIndex = 0; //Item du menu qui est actuellement selectionné
 
     title.setString("END GAME");
     title.setColor(sf::Color::White);
@@ -38,12 +39,14 @@ EndGame::~EndGame()
 
 void EndGame::draw(sf::RenderWindow& window, sf::Text chrono)
 {
-    window.draw(title);
+    window.draw(title);//Je dessine mon titre
+
     chrono.setPosition(sf::Vector2f(this->width/2 - 60, 100 ));
     chrono.setFont(font);
     chrono.setColor(sf::Color::White);
     chrono.setCharacterSize(30);
-    window.draw(chrono);
+    window.draw(chrono); //Je draw mon la valeur stoppée de mon chrono qui vient de HUD
+
     for(int i = 0; i< MAX_NUMBER_OF_ITEMS; i++){
         float calculatedWidthRect = (this->width/2) - 150;
         float calculatedWidthText = (this->width/2) - (menu[i].getGlobalBounds().width/2);
@@ -60,27 +63,26 @@ void EndGame::draw(sf::RenderWindow& window, sf::Text chrono)
 
 void EndGame::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window,bool& flagEndGame)
 {
-    if(!flagInGame)
+    if(!flagInGame) //Si je ne suis pas en jeu
     {
-        switch (event.key.code)
+        switch (event.key.code) //Je fais un switch sur l'event
         {
-            case sf::Keyboard::Up:
-                MoveUp();
+            case sf::Keyboard::Up: //Si j'appuie sur la flèche du haut
+                MoveUp(); //Je bouge sur la case au dessus
                 break;
-            case sf::Keyboard::Down:
-                MoveDown();
+            case sf::Keyboard::Down: //Si j'appuie sur la flèche du bas
+                MoveDown(); //Je descends dans mon menu
                 break;
-            case sf::Keyboard::Return:
-                switch(selectedItemIndex)
+            case sf::Keyboard::Return: //Si j'appuie sur Enter
+                switch(selectedItemIndex) //En fonction de l'élément selectionné
                 {
-                    case 0:
+                    case 0: //Je relance le jeu
                         std::cout << "Play button has been pressed" <<std::endl;
                         flagInGame = true;
                         flagEndGame = false;
-
                         break;
-                    case 1:
-                        std::cout << "Options button has been pressed" <<std::endl;
+
+                    case 1: //je reviens au menu
                         flagInGame = false;
                         flagEndGame = false;
                         break;
@@ -88,6 +90,12 @@ void EndGame::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& windo
         }
     }
 }
+
+/*
+    Globalement les mouvements permette d'attribuer
+    à la variable selectedItemIndex la box sur laquelle elle se trouve
+    et de mettre en rouge le menu text sur lequel elle se trouve
+*/
 
 void EndGame::MoveUp(){
     if(selectedItemIndex - 1 >=0){

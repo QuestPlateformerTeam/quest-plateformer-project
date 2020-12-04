@@ -4,14 +4,17 @@ Map::Map()
 {
     // on crée la tilemap avec le niveau précédemment défini
     if (!load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()))
-        std::cout<<"Erreur lors du chargement du tilset"<<std::endl;
-
-
+        std::cout<<"Erreur lors du chargement du tilset"<<std::endl; //Message d'erreur en console au cas ou
 }
 
 Map::~Map(){}
 
-//Getters & Setters
+/*
+    =================
+    Getters & Setters
+    =================
+*/
+
 sf::Vertex* Map::getVertex(){return quad;}
 sf::VertexArray Map::getVertices(){return m_vertices;}
 int Map::getScreenWidth() const{return SCREEN_WIDTH;}
@@ -22,33 +25,27 @@ int Map::getNbTileByColumn() const{return NB_TILE_BY_COLUMN;}
 int* Map::getTiles(){return tiles;}
 int Map::getStartX(){return startX;}
 int Map::getStartY(){return startY;}
+int Map::getLevel(){return this->level;}
+void Map::setLevel(int newLevel){this->level = newLevel;}
 
-int Map::getLevel()
-{
-    return this->level;
-}
 
-void Map::setLevel(int newLevel)
+void Map::changeToNextLevel(bool& flagEndGame, bool& flagInGame) //Fonction pour aller au niveau suivant
 {
-    this->level = newLevel;
-}
-
-void Map::changeToNextLevel(bool& flagEndGame, bool& flagInGame)
-{
-    setLevel(getLevel()+1);
-    if(this->level<=2)
+    setLevel(getLevel()+1); //J'incrémente ma variable level pour aller au suivant
+    if(this->level<=2) //Si inférieur à 2 pour limiter les niveaux
     {
-        levelToLoad = "ressources/maps/map"+std::to_string(this->level)+".txt";
-        load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn());
-    }else
+        levelToLoad = "ressources/maps/map"+std::to_string(this->level)+".txt"; //Je prépare mon string pour le niveau
+        load(sf::Vector2u(getTileSize(), getTileSize()), getNbTileByLine(), getNbTileByColumn()); //Je charge le nouveau fichier map
+    }
+    else //Sinon
     {
-        flagEndGame = true;
-        flagInGame = false;
-        resetGame();
+        flagEndGame = true; //Je ne suis en fin de game car j'ai fini les niveaux
+        flagInGame = false; // Je m'assure de ne plus être en jeu
+        resetGame(); //Je reset la partie pour être certain de bien redémarrer
     }
 }
 
-void Map::resetGame()
+void Map::resetGame() //Ma fonction de reset permet de recharger le jeu depuis le début
 {
     setLevel(1);
     levelToLoad = "ressources/maps/map"+std::to_string(this->level)+".txt";
@@ -59,25 +56,26 @@ void Map::resetGame()
 bool Map::load(sf::Vector2u tileSize, unsigned int width, unsigned int height)
 {
 
-    backgroundTexture.loadFromFile("ressources/graphics/background.png");
-    backgroundSprite.setScale(1.8,1.8);
-    backgroundSprite.setTexture(backgroundTexture);
+    backgroundTexture.loadFromFile("ressources/graphics/background.png"); //Je charge mon fond de fenêtre
+    backgroundSprite.setScale(1.8,1.8); //Je règle l'echelle de mon fond
+    backgroundSprite.setTexture(backgroundTexture); //Je set la texture dans mon sprite
 
-    std::fstream myFile(this->levelToLoad, std::ios_base::in);
-    std::string Line;
-    if(myFile.is_open())
+    std::fstream myFile(this->levelToLoad, std::ios_base::in); //Je prépare le fichier map à lire
+    std::string Line; //Je crée un string qui va récupérer les caractères entre chaque delimiter
+
+    if(myFile.is_open())//Si mon fichier est ouvert
     {
-        for (int i = 0; i < NB_TILE ; i++) //Récupère les valeurs pour chaque tuile
+        for (int i = 0; i < NB_TILE ; i++) //Récupère les valeurs pour chaque tuile soit 400 dans notre jeu
         {
             getline(myFile,Line,','); //Récupère les valeurs une par une séparée par le délimiteur ','
             std::stringstream iss;
             iss << Line; //Stocke les caractères dans un stream
             iss >> tiles[i]; //Renvoie le stream en un int dans l'array
         }
-        myFile.close();
+        myFile.close(); //Je ferme mes ressources
     }
     else
-        std::cout<<"Erreur chargement map"<<std::endl;
+        std::cout<<"Erreur chargement map"<<std::endl; //En cas d'erreur, un message console pour en être informé
 
     // on charge la texture du tileset
     if (!m_tileset.loadFromFile("ressources/graphics/tileset3.png"))
@@ -117,7 +115,7 @@ bool Map::load(sf::Vector2u tileSize, unsigned int width, unsigned int height)
     return true;
 }
 
-void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const //Méthode héritée directement de Drawable
 {
         // on applique la transformation
         states.transform *= getTransform();
@@ -128,7 +126,7 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
         target.draw(m_vertices, states);
 }
 
-int Map::getTileNumber(int x, int y, int PLAYER_WIDTH, int PLAYER_HEIGHT)
+int Map::getTileNumber(int x, int y, int PLAYER_WIDTH, int PLAYER_HEIGHT) //Fonction qui me permet de savoir sur quelle tuile je suis en fonction de la position de mon player
 {
     return ((((int)(x+PLAYER_WIDTH/2)/TILE_SIZE))) + (((int)(y+PLAYER_HEIGHT/2)/TILE_SIZE)*NB_TILE_BY_LINE);
 }

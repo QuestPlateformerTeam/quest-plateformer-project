@@ -4,6 +4,7 @@
 
 namespace Collision
 {
+    //Me permet de crée un masque bit de l'image pour vérifier les valeurs alpha de l'image par la suite
     class BitmaskManager
     {
     public:
@@ -16,7 +17,6 @@ namespace Collision
         sf::Uint8 GetPixel (const sf::Uint8* mask, const sf::Texture* tex, unsigned int x, unsigned int y) {
             if (x>tex->getSize().x||y>tex->getSize().y)
                 return 0;
-
             return mask[x+y*tex->getSize().x];
         }
 
@@ -48,6 +48,12 @@ namespace Collision
     };
 
     BitmaskManager Bitmasks;
+
+    // Test pour une collision entre 2 sprites en comparant les valeurs alpha des pixels
+    // Supporte les rotations et les mouvements des sprites
+    // AlphaLimit: Le seuil auquel un pixel devient "solide".
+    // Si AlphaLimit vaut 127, un pixel avec une valeur alpha 128 va provoquer une collision alors qu'un pixel avec une valeur alpha de 126 ne le fera pas.
+    // La fonction crée des bitmasks des textures des 2 sprites en téléchargeant les textures de la carte graphique à la mémoire. => Ralenti le pc.
 
     bool PixelPerfectTest(const sf::Sprite& Object1, const sf::Sprite& Object2, sf::Uint8 AlphaLimit) {
         sf::FloatRect Intersection;

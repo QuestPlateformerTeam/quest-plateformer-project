@@ -50,9 +50,6 @@ class Player
         bool isTopOfJump = true;
         int fromHeight;
         int WALL_TILE = 90;
-        /*int TILE_LEFT = 123;
-        int TILE_RIGHT = 122;
-        int TILE_HEIGHT = 113;*/
         int TILE_KILL = 188;
 
         //Spritesheet de Rabidja

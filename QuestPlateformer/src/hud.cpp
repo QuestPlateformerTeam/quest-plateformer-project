@@ -1,6 +1,5 @@
 #include "hud.h"
 
-
 HudLayer::HudLayer()
 {
     if(!font.loadFromFile("ressources/police/arial.ttf"))
@@ -18,17 +17,11 @@ HudLayer::HudLayer()
 
 }
 
-HudLayer::~HudLayer()
-{
-    //dtor
-}
+HudLayer::~HudLayer(){}//Destructeur
 
-void HudLayer::restartChrono()
-{
-    clock.restart();
-}
+void HudLayer::restartChrono(){clock.restart();}//Permet de restart le chrono pour chaque game
 
-void HudLayer::draw(sf::RenderWindow& window, Map map , Player& player)
+void HudLayer::draw(sf::RenderWindow& window, Map map , Player& player) //Dessine mon affichage tete haute au dessus de ma map pour obtenir les informations joueurs
 {
     fullStringLife = "Life: " + std::to_string(player.getLife()) +"  Level: "+std::to_string(map.getLevel());
     fullStringTime = "Timer: "+std::to_string((int)clock.getElapsedTime().asSeconds())+"s";

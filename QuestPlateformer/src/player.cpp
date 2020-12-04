@@ -1,227 +1,224 @@
 #include "player.h"
 #include "math.h"
 
-
+//Constructeur de mon objet player
 Player::Player(int x, int y)
 {
+    //J'affecte à mon joueur une position X et Y sur la fenêtre.
     this->positionX = x;
     this->positionY = y;
 
+    //Je charge une texture et je mets la texture dans le sprite pour pouvoir l'utiliser à l'écran
     if (!texture.loadFromFile("ressources/graphics/deadpool.png"))
-        std::cout << "Erreur durant le chargement du spritesheet du player." << std::endl;
+        std::cout << "Erreur durant le chargement du spritesheet du player." << std::endl; //Retourne un message console en cas d'erreur
     else
     {
         sprite.setTexture(texture);
-        sprite.setTextureRect(sf::IntRect(PLAYER_HEIGHT,PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT));
+        sprite.setTextureRect(sf::IntRect(PLAYER_HEIGHT,PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT)); //Je récupère une image spécifique sur ma spritesheet
     }
 
-    if (!soundDeath.openFromFile("ressources/songs/deathSound.ogg"))
-        std::cout<<"Erreur lors du chargement du son de mort"<<std::endl;
-    soundDeath.setVolume(50.f);
+    /*
+        Ici je charge les deux fichiers audio que le joueur rencontrera sur la map
+    */
+    if (!soundDeath.openFromFile("ressources/songs/deathSound.ogg")) //Chargement du fichier audio son de mort du joueur
+        std::cout<<"Erreur lors du chargement du son de mort"<<std::endl;//Retourne un message console en cas d'erreur
+    soundDeath.setVolume(10.f);
 
-    if (!soundCoin.openFromFile("ressources/songs/coin.ogg"))
-        std::cout<<"Erreur lors du chargement du son de mort"<<std::endl;
-    soundCoin.setVolume(50.f);
+    if (!soundCoin.openFromFile("ressources/songs/coin.ogg")) //Chargement du fichier audio son récupération d'une pièce
+        std::cout<<"Erreur lors du chargement du son de mort"<<std::endl;//Retourne un message console en cas d'erreur
+    soundCoin.setVolume(10.f);
 
 
 }
 
 Player::~Player()
 {
-    //dtor
+    //destructeur
 }
 
-void Player::setPlayerAtStart(Map map)
+/*
+    =================
+    Getters & Setters
+    =================
+*/
+void Player::setLife(int newLife){this->life = newLife;}
+int Player::getLife(){return life;}
+//Fonction pour renvoyer le joueur à son point de départ
+void Player::setPlayerAtStart(Map map){this->positionX = map.getStartX();this->positionY = map.getStartY();}
+
+
+void Player::isDead(Map& map, bool& flagGameOver, bool& flagInGame) //Fonction qui gère la mort d'un joueur
 {
+    sf::sleep(sf::milliseconds(750)); // Je fais une pause de 0,75s pour attirer le joueur sur sa mort et le préparer à la réapparition
 
-    this->positionX = map.getStartX();
-    this->positionY = map.getStartY();
-}
-
-void Player::isDead(Map& map, bool& flagGameOver, bool& flagInGame)
-{
-    sf::sleep(sf::milliseconds(750));
-
-    if(life > 1)
+    if(life > 1) // Si il lui reste des vies
     {
-        life--;
-        sprite.setTextureRect(sf::IntRect(1 * PLAYER_HEIGHT ,PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT));
-        setPlayerAtStart(map);
-    }else
+        life--; // Je retire une vie
+        sprite.setTextureRect(sf::IntRect(1 * PLAYER_HEIGHT ,PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT)); // Je recharge son sprite en position de départ
+        setPlayerAtStart(map); // Je renvoie le joueur au point de départ
+    }
+    else //Si le joueur n'a plus de vie
     {
-        map.resetGame();
-        setLife(3);
-        setPlayerAtStart(map);
-        flagGameOver = true;
-        flagInGame = false;
+        flagGameOver = true; //J'active l'état GAME OVER
+        flagInGame = false; //Je m'assure qu'il ne soit plus en partie
+
+        map.resetGame(); //Je reset la partie
+        setLife(3); // Je pré rempli sa vie à 3 pour la prochaine partie
+        setPlayerAtStart(map); // Je renvoie le joueur au départ pour la prochaine partie
     }
 }
 
-void Player::setLife(int newLife)
-{
-    this->life = newLife;
-}
-int Player::getLife()
-{
-    return life;
-}
-
+// Fonction pour dessiner mon joueur sur la map
 void Player::draw(sf::RenderWindow& window, Map map)
 {
-    sprite.setPosition(sf::Vector2f(this->positionX,this->positionY));
     window.draw(sprite);
 }
 
+//Fonction pour actualiser les infos du joueur
 void Player::update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer, bool& flagEndGame, bool& flagGameOver)
 {
-    deplacement(flagInGame,map,level);
 
-    if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
+    deplacement(flagInGame,map,level);// Une fonction a été créée séparemment pour s'y retrouver plus facilement dans le code
+
+    sprite.setPosition(sf::Vector2f(this->positionX,this->positionY)); //J'actualise la position de mon joueur
+
+    if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds())) // je viens vérifier si mon joueur entre en collision avec une tuile de la map VOIR MAP.H pour comprendre
     {
-        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == EXIT_TILE && coinContainer.isAllLooted() )
+        //Si mon joueur marche sur la tile EXIT et qu'il a ramassé toutes les pièces alors le joueur valide la condition
+        if (level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == EXIT_TILE && coinContainer.isAllLooted())
         {
-            map.changeToNextLevel(flagEndGame, flagInGame);
-            setPlayerAtStart(map);
-            fireballContainer.resetAll();
-            coinContainer.loadConfig(map);
-            coinContainer.resetAll();
-            coinContainer.setLooted(false);
-            if(flagEndGame)
+            map.changeToNextLevel(flagEndGame, flagInGame); //Je passe au niveau suivant
+            setPlayerAtStart(map); //J'envoie le joueur au départ
+            fireballContainer.resetAll(); //Je redémarre le boules de feu
+            coinContainer.loadConfig(map); // Je recharge bien le bon map config pour les pièces
+            coinContainer.resetAll(); //Je les replace toutes à leur position
+            coinContainer.setLooted(false);//Je précise que mon joueur n'a pas ramassé les pièces
+            if(flagEndGame)// Et si le joueur finit la partie en marchant sur le dernier EXIT alors, je remets sa vie à 3 pour le préparer à une nouvelle partie
                 life = 3;
         }
 
-        if ((level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)]) == TILE_KILL )
+        if ((level[map.getTileNumber(positionX, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)]) == TILE_KILL )// Si le joueur marche sur la TILE lave
         {
-            soundDeath.play();
-            isDead(map, flagGameOver, flagInGame);
-            fireballContainer.resetAll();
-            coinContainer.loadConfig(map);
-            coinContainer.resetAll();
-            soundDeath.stop();
+            soundDeath.stop(); //Je m'assure que mon son est stoppé
+            soundDeath.play();//Je lance le son de mort
+            isDead(map, flagGameOver, flagInGame); // J'active la fonction mort
+            fireballContainer.resetAll();// Je reset les boules de feu
+            coinContainer.loadConfig(map); //Je recharge mon fichier de config
+            coinContainer.resetAll(); //Je reset les pièces
         }
 
     }
 
-    for(int i = 0; i<=fireballContainer.getNbFireball(); i++)
+    for(int i = 0; i<=fireballContainer.getNbFireball(); i++)//Je boucle sur toutes mes boules de feu
     {
-        if (Collision::PixelPerfectTest(sprite,fireballContainer.getOneFireball(i).getSprite()))
+        if (Collision::PixelPerfectTest(sprite,fireballContainer.getOneFireball(i).getSprite()))//J'utilise la fonction de perfect pixel collision avec une boule de feu
         {
-            soundDeath.play();
-            isDead(map,flagGameOver, flagInGame);
-            fireballContainer.resetAll();
-            coinContainer.loadConfig(map);
-            coinContainer.resetAll();
-            hasJump = false;
-            soundDeath.stop();
+            soundDeath.stop(); //Je m'assure que mon son est stoppé
+            soundDeath.play(); //Je lance le son de mort
+            isDead(map,flagGameOver, flagInGame); // J'active la fonction mort
+            fireballContainer.resetAll(); // Je reset les boules de feu
+            coinContainer.loadConfig(map); //Je recharge mon fichier de config
+            coinContainer.resetAll(); //Je reset les pièces
+            hasJump = false; //Je dis que mon joueur n'est pas en saut pour qu'au respawn il ne saute pas tout seul
         }
     }
 
-    for(int i = 0; i<=coinContainer.getNbCoin(); i++)
+    for(int i = 0; i<=coinContainer.getNbCoin(); i++)//Je boucle sur toutes mes pièces
     {
-        if(Collision::PixelPerfectTest(sprite,coinContainer.getOneCoin(i),128) && coinContainer.getThisCoin(i).getDisplay())
+        if(Collision::PixelPerfectTest(sprite,coinContainer.getOneCoin(i)) && coinContainer.getThisCoin(i).getDisplay()) //J'utilise la fonction de perfect pixel collision avec les pièces
         {
-            soundCoin.stop();
-            soundCoin.play();
-            coinContainer.changeToNextCoin();
-
+            soundCoin.stop();//Je m'assure que mon son est stoppé
+            soundCoin.play();//Je lance le son
+            coinContainer.changeToNextCoin();// Si j'ai touché une pièce je peux afficher la suivante
         }
-
     }
 }
 
-void Player::deplacement(bool& flagInGame, Map& map,const int* level)
+void Player::deplacement(bool& flagInGame, Map& map,const int* level) //Déplacement
 {
-
-     if(hasJump && !lockUp)
+    if(hasJump && !lockUp) //Condition qui vérifie que mon joueur à sauter et qu'il n'est pas bloqué par un mur au dessus de lui
     {
-        this->positionY-= velocityY*0.7;
-        if(fromHeight-this->positionY >= MAX_HEIGHT_JUMP)
-            isTopOfJump = true;
+        this->positionY-= velocityY*0.7; //Calcul pour faire monter le joueur
+        if(fromHeight-this->positionY >= MAX_HEIGHT_JUMP) //Si le joueur atteint la hauteur max prévue pour le saut
+            isTopOfJump = true;//je dis qu'il a atteint le haut de son saut pour prévoir la redescente
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !lockLeft)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !lockLeft)//Si le joueur appuie sur la touche et que le boolean lui permet d'aller à gauche
     {
-        positionX-= MOVESPEED;
-        sprite.setTextureRect(sf::IntRect(counterWalking * PLAYER_HEIGHT ,PLAYER_WIDTH * 1.2,PLAYER_WIDTH,PLAYER_HEIGHT));
-        if(!hasJump)
+        positionX-= MOVESPEED; //Le joueur se déplace vers la gauche
+        sprite.setTextureRect(sf::IntRect(counterWalking * PLAYER_HEIGHT ,PLAYER_WIDTH * 1.2,PLAYER_WIDTH,PLAYER_HEIGHT));//J'affiche le sprite qui correspond à un déplacement gauche
+        if(!hasJump)//Si il n'est pas dans les airs
+        {
             timee++;
             if(timee==5)
             {
-                counterWalking++;
+                counterWalking++;//J'anime le joueur
                 timee =0;
             }
+        }
     }
 
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !lockRight)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !lockRight)//Si le joueur appuie sur la touche et que le boolean lui permet d'aller à droite
     {
         positionX+= MOVESPEED;
-        sprite.setTextureRect(sf::IntRect(counterWalking * PLAYER_HEIGHT, PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT));
+        sprite.setTextureRect(sf::IntRect(counterWalking * PLAYER_HEIGHT, PLAYER_WIDTH * 2.4,PLAYER_WIDTH,PLAYER_HEIGHT)); //J'affiche le sprite qui correspond à un déplacement à droite
         if(!hasJump)
+        {
             timee++;
             if(timee==5)
             {
-                counterWalking++;
+                counterWalking++; //J'anime le joueur
                 timee =0;
             }
-
+        }
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !lockUp && canJump)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !lockUp && canJump) //Si le joueur appuie sur la touche et que le boolean lui permet de sauter
     {
-        hasJump = true;
-        isTopOfJump = false;
-        fromHeight = this->positionY;
-        canJump = false;
+        hasJump = true; //Je dis que mon joueur à sauter
+        isTopOfJump = false; //Je dis qu'il n'a pas atteint la hauteur max de son saut
+        fromHeight = this->positionY; // Je récupère la position depuis laquelle il saute
+        canJump = false; //Je préviens le double jump en bloquant le saut si il est en l'air
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) //Si j'appuie sur escape mon joueur revient au menu pause
         flagInGame = false;
 
-    if(counterWalking == 3)
+    if(counterWalking == 3) //Si j'arrive à la fin de mon animation je la recommence
         counterWalking = 0;
 
-    if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
+
+    if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds())) //Ici sont placées les conditions pour vérifier les collisions du joueur avec son environnement
     {
 
         if ((level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE)|| positionX>=780)
-        {
-            lockRight = true;
-            //std::cout<<"Collision a droite"<<std::endl;
-        }else
-        {
-            lockRight = false;
-        }
+            lockRight = true; //Si je rencontre le bord de la map ou le bord d'un mur je bloque la droite
+        else
+            lockRight = false; //Sinon j'autorise
+
         if ((level[map.getTileNumber(positionX-20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE)|| positionX<=-5)
-        {
-            lockLeft = true;
-            //std::cout<<"Collision a gauche"<<std::endl;
-        }else
-        {
+            lockLeft = true; //Si je rencontre le bord de la map ou le bord d'un mur je bloque la gauche
+        else
             lockLeft = false;
-        }
+
         if (level[map.getTileNumber(positionX, positionY+25,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE)
         {
-            lockDown = true;
-            //std::cout<<"Collision en bas"<<std::endl;
-            canJump = true;
-            isTopOfJump = false;
-        }else if(isTopOfJump || !hasJump)
+            lockDown = true; //Si je rencontre le bord de la map ou le bord d'un mur je bloque le bas
+            canJump = true; //Je m'assure que le joueur peut sauter
+            isTopOfJump = false; // Mais donc je m'assure que s'il vient de sauter il ne peut pas directement être au sommet du saut
+        }else if(isTopOfJump || !hasJump) //Sinon le il est en haut d'un saut et qu'il ne vient pas sauter comme si il quitte un bloc plus haut pour un bloc plus bas
         {
-            lockDown = false;
-            this->positionY+= velocityY*0.5;
-            hasJump = false;
+            lockDown = false; //J'autorise la chute
+            this->positionY+= velocityY*0.5; //Calcul de la chute
+            hasJump = false; //Je m'assure que le joueur ne vient pas de sauter
         }
         if ((level[map.getTileNumber(positionX, positionY-25,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE )|| positionY>=455)
         {
-            lockUp = true;
-            //std::cout<<"Collision en haut"<<std::endl;
-            isTopOfJump = true;
+            lockUp = true; //Si je rencontre le bord de la map ou le bord d'un mur je bloque le haut
+            isTopOfJump = true; //J'assure que je ne suis donc en phase descendante d'un saut
 
         }else
-        {
-            lockUp = false;
-        }
+            lockUp = false; //Sinon je bloque le saut
     }
 }
 

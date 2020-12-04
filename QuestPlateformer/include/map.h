@@ -32,8 +32,6 @@ class Map : public sf::Drawable, public sf::Transformable
         void changeToNextLevel(bool& flagEndGame, bool& flagInGame);
         void resetGame();
 
-
-
     protected:
 
     private:
