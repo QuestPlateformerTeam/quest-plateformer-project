@@ -184,7 +184,7 @@ void Player::deplacement(bool& flagInGame, Map& map,const int* level)
     if (sprite.getGlobalBounds().intersects(map.getVertices().getBounds()))
     {
 
-        if ((level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE) || positionX>=780)
+        if ((level[map.getTileNumber(positionX+20, positionY,PLAYER_WIDTH,PLAYER_HEIGHT)] == WALL_TILE)|| positionX>=780)
         {
             lockRight = true;
             //std::cout<<"Collision a droite"<<std::endl;
