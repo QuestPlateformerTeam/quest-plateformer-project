@@ -72,9 +72,7 @@ void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, 
                     case 0:
                         //Je lance jeu
                         flagInGame = true;
-                        if(flagPause)
-                            hud.restartChrono(); //Je redémarre le chrono
-                        flagPause=false;
+                        hud.restartChrono(); //Je redémarre le chrono
                         break;
                     case 1:
                         std::cout << "Options button has been pressed" <<std::endl;

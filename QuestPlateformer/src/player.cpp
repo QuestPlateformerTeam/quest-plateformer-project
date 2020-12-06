@@ -181,9 +181,11 @@ void Player::deplacement(bool& flagInGame, Map& map,const int* level, bool& flag
         canJump = false; //Je préviens le double jump en bloquant le saut si il est en l'air
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) //Si j'appuie sur escape mon joueur revient au menu pause
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))//Si j'appuie sur escape mon joueur revient au menu pause
+    {
         flagInGame = false;
         flagPause = true;
+    }
 
     if(counterWalking == 3) //Si j'arrive à la fin de mon animation je la recommence
         counterWalking = 0;

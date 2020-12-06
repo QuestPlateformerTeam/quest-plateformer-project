@@ -16,10 +16,10 @@
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
-					<Add library="sfml-graphics-d" />
-					<Add library="sfml-window-d" />
-					<Add library="sfml-audio-d" />
-					<Add library="sfml-system-d" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-audio" />
+					<Add library="sfml-system" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -45,11 +45,6 @@
 			<Add directory="C:/SDL/SFML-2.5.1/include" />
 		</Compiler>
 		<Linker>
-			<Add library="mingw32" />
-			<Add library="user32" />
-			<Add library="gdi32" />
-			<Add library="winmm" />
-			<Add library="dxguid" />
 			<Add directory="C:/SDL/SFML-2.5.1/lib" />
 		</Linker>
 		<Unit filename="include/Collision.h" />

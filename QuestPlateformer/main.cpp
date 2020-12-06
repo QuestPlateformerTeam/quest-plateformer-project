@@ -39,7 +39,6 @@ int main(int argc, char *argv[])
 
     sf::RenderWindow window(sf::VideoMode(map.getScreenWidth(), map.getScreenHeight(), map.getTileSize()), "Quest Plateformer | Neven - Leveau - Lopez - Moins "); // Je paramètre ma fenêtre
     window.setFramerateLimit(60);//Je règles l'affichage sur 60 images secondes
-    window.setVerticalSyncEnabled(true);//j'active la synchronisation verticale pour éviter les grésillements
 
     sf::err().rdbuf(NULL); //Supprime une boucle warning console sur pc Alex
 
