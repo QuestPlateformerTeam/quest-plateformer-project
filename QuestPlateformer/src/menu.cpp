@@ -32,19 +32,19 @@ Menu::Menu(float width, float height)
         Je prépare les textes pour mon menu
     */
 
-    menu[0].setColor(sf::Color::Red);
+    menu[0].setFillColor(sf::Color::Red);
     menu[0].setString("Play");
 
-    menu[1].setColor(sf::Color::White);
+    menu[1].setFillColor(sf::Color::White);
     menu[1].setString("Options");
 
-    menu[2].setColor(sf::Color::White);
+    menu[2].setFillColor(sf::Color::White);
     menu[2].setString("Exit");
 
     selectedItemIndex = 0; //Item du menu qui est actuellement selectionné
 
     title.setString("Quest Plateformer");
-    title.setColor(sf::Color::White);
+    title.setFillColor(sf::Color::White);
     title.setFont(fontTitle);
     title.setCharacterSize(60);
     title.setPosition((this->width/2)-(title.getGlobalBounds().width/2),10);
@@ -85,7 +85,9 @@ void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, 
                     case 2:
                         window.close();
                         break;
+                    default:break;
                 }
+            default:break;
         }
     }
 }
@@ -117,18 +119,18 @@ void Menu::draw(sf::RenderWindow & window){
 */
 void Menu::MoveUp(){
     if(selectedItemIndex - 1 >=0){
-        menu[selectedItemIndex].setColor(sf::Color::White);
+        menu[selectedItemIndex].setFillColor(sf::Color::White);
         selectedItemIndex--;
-        menu[selectedItemIndex].setColor(sf::Color::Red);
+        menu[selectedItemIndex].setFillColor(sf::Color::Red);
     }
 }
 
 void Menu::MoveDown()
 {
     if(selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS){
-        menu[selectedItemIndex].setColor(sf::Color::White);
+        menu[selectedItemIndex].setFillColor(sf::Color::White);
         selectedItemIndex++;
-        menu[selectedItemIndex].setColor(sf::Color::Red);
+        menu[selectedItemIndex].setFillColor(sf::Color::Red);
     }
 }
 

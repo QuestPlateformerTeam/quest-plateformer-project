@@ -1,5 +1,4 @@
-#include "Map.h"
-
+#include "map.h"
 Map::Map()
 {
     // on crée la tilemap avec le niveau précédemment défini

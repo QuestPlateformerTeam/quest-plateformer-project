@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
                     break;
                 case sf::Event::KeyReleased: //Je capture un évènement lors du relachement d'une touche
                     menu.update(event, flagInGame, window, hud); //J'envoie l'évènement dans une méthode qui met à jour mon menu principal.
+                default:;
             }
         }
 
