@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     CoinContainer coinContainer(map);
     Menu menu(map.getScreenWidth(), map.getScreenHeight());
 
+    bool flagPause = false;
     bool flagInGame = false;//Je règle l'état EN JEU sur faux
     bool flagEndGame = false;//Je règle l'état FIN sur faux
     EndGame endGame(map.getScreenWidth(),map.getScreenHeight());
@@ -42,7 +43,6 @@ int main(int argc, char *argv[])
 
     sf::err().rdbuf(NULL); //Supprime une boucle warning console sur pc Alex
 
-
     while(window.isOpen()) //Boucle tant que ma fenêtre de jeu est ouverte
     {
         sf::Event event;
@@ -54,13 +54,11 @@ int main(int argc, char *argv[])
                     window.close();
                     break;
                 case sf::Event::KeyReleased: //Je capture un évènement lors du relachement d'une touche
-                    menu.update(event, flagInGame, window, hud); //J'envoie l'évènement dans une méthode qui met à jour mon menu principal.
+                    menu.update(event, flagInGame, window, hud, flagPause); //J'envoie l'évènement dans une méthode qui met à jour mon menu principal.
                 default:;
             }
         }
-
         window.clear(); // Je nettoie ma fenêtre avant de dessiner à nouveau
-
         //A partir d'ici je vérifie l'état de mon jeu {EN MENU, EN JEU, EN GAME OVER, EN FIN DE JEU}
         //Je place le 1er IF dans le dessus de la boucle pour optimiser le temps de chargement vu que c'est la fenêtre la plus gourmande
         //Et qui apparaitra le plus souvent
@@ -70,7 +68,7 @@ int main(int argc, char *argv[])
             hud.draw(window, map, player); //Je dessine le HUD ou Affichage tête haute en français
             fireballContainer.draw(window); // J'initialise le conteneur de mes boules de feu
             coinContainer.draw(window); //J'initialise le contenur de mes pièces
-            player.update(map, flagInGame, map.getTiles(), fireballContainer, coinContainer,flagEndGame, flagGameOver); //Je mets à jour mon joueur et sa position sur la map
+            player.update(map, flagInGame, map.getTiles(), fireballContainer, coinContainer,flagEndGame, flagGameOver,flagPause); //Je mets à jour mon joueur et sa position sur la map
             player.draw(window,map); //Une fois la mise à jour du joueur faite, je le dessine
         }
         else if(flagEndGame || flagGameOver) //Si je suis en fin de partie ou en game over
@@ -81,7 +79,6 @@ int main(int argc, char *argv[])
         }
         else //Sinon je reviens sur le menu du jeu en cas de problème ou d'évènement inattendu
             menu.draw(window); // Je dessine mon menu
-
         window.display();//Une fois toutes les opérations faites, j'affiche tout le contenu de window sur la fenêtre qui est affichée à l'écran
     }
 }

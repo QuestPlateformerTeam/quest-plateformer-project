@@ -17,8 +17,8 @@ class Player
         Player(const Player& player) { /* copy construction from rhs*/ }
         Player& operator=(const Player& player);
         void draw(sf::RenderWindow& window, Map map);
-        void update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer,bool& flagEndGame, bool& flagGameOver);
-        void deplacement(bool& flagInGame, Map& map,const int* level);
+        void update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer,bool& flagEndGame, bool& flagGameOver, bool& flagPause);
+        void deplacement(bool& flagInGame, Map& map,const int* level, bool& flagPause);
         void setLife(int newLife);
         int getLife();
         void setPlayerAtStart(Map map);

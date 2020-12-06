@@ -16,17 +16,13 @@ Menu::Menu(float width, float height)
     this->height = height; //Je récupère la hauteur de ma window
 
     if(!font.loadFromFile("ressources/police/arial.ttf")) //Je charge ma police d'écriture
-    {
         std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;//Msg d'erreur console
-    }
+
     if(!fontTitle.loadFromFile("ressources/police/castlevania.ttf"))//Je charge ma police d'écriture
-    {
         std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;//Msg d'erreur console
-    }
+
     if(!backgroundTexture.loadFromFile("ressources/graphics/background.png"))//Je charge mon fond de fenêtre
-    {
         std::cout<<"Impossible de charger le background menu"<<std::endl;;//Msg d'erreur console
-    }
 
     /*
         Je prépare les textes pour mon menu
@@ -58,7 +54,7 @@ Menu::Menu(float width, float height)
     backgroundSprite.setScale(sf::Vector2f(1.8,1.8));
 }
 
-void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, HudLayer& hud)
+void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, HudLayer& hud, bool& flagPause)
 {
     if(!flagInGame)//Si je ne suis pas en jeu
     {
@@ -76,7 +72,9 @@ void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, 
                     case 0:
                         //Je lance jeu
                         flagInGame = true;
-                        hud.restartChrono(); //Je redémarre le chrono
+                        if(flagPause)
+                            hud.restartChrono(); //Je redémarre le chrono
+                        flagPause=false;
                         break;
                     case 1:
                         std::cout << "Options button has been pressed" <<std::endl;

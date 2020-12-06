@@ -16,7 +16,7 @@ class Menu
         void draw(sf::RenderWindow &window);
         void MoveUp();
         void MoveDown();
-        void update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, HudLayer& hud);
+        void update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, HudLayer& hud, bool& flagPause);
 
     protected:
 

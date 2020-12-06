@@ -116,7 +116,7 @@ bool Map::load(sf::Vector2u tileSize, unsigned int width, unsigned int height)
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const //Méthode héritée directement de Drawable
 {
-        // on applique la transformation
+        //Coin on applique la transformation
         states.transform *= getTransform();
         // on applique la texture du tileset
         states.texture = &m_tileset;

@@ -2,9 +2,6 @@
 #define FIREBALL_H
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 class Fireball
 {

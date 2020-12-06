@@ -47,7 +47,7 @@ int Player::getLife(){return life;}
 void Player::setPlayerAtStart(Map map){this->positionX = map.getStartX();this->positionY = map.getStartY();}
 
 
-void Player::isDead(Map& map, bool& flagGameOver, bool& flagInGame) //Fonction qui gère la mort d'un joueur
+void Player::isDead(Map& map, bool& flagEndGame, bool& flagInGame) //Fonction qui gère la mort d'un joueur
 {
     sf::sleep(sf::milliseconds(750)); // Je fais une pause de 0,75s pour attirer le joueur sur sa mort et le préparer à la réapparition
 
@@ -59,7 +59,7 @@ void Player::isDead(Map& map, bool& flagGameOver, bool& flagInGame) //Fonction q
     }
     else //Si le joueur n'a plus de vie
     {
-        flagGameOver = true; //J'active l'état GAME OVER
+        flagEndGame = true; //J'active l'état GAME OVER
         flagInGame = false; //Je m'assure qu'il ne soit plus en partie
 
         map.resetGame(); //Je reset la partie
@@ -75,10 +75,10 @@ void Player::draw(sf::RenderWindow& window, Map map)
 }
 
 //Fonction pour actualiser les infos du joueur
-void Player::update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer, bool& flagEndGame, bool& flagGameOver)
+void Player::update(Map& map, bool& flagInGame, const int* level, FireballContainer& fireballContainer, CoinContainer& coinContainer, bool& flagEndGame, bool& flagGameOver, bool& flagPause)
 {
 
-    deplacement(flagInGame,map,level);// Une fonction a été créée séparemment pour s'y retrouver plus facilement dans le code
+    deplacement(flagInGame,map,level,flagPause);// Une fonction a été créée séparemment pour s'y retrouver plus facilement dans le code
 
     sprite.setPosition(sf::Vector2f(this->positionX,this->positionY)); //J'actualise la position de mon joueur
 
@@ -101,7 +101,7 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
         {
             soundDeath.stop(); //Je m'assure que mon son est stoppé
             soundDeath.play();//Je lance le son de mort
-            isDead(map, flagGameOver, flagInGame); // J'active la fonction mort
+            isDead(map, flagEndGame, flagInGame); // J'active la fonction mort
             fireballContainer.resetAll();// Je reset les boules de feu
             coinContainer.loadConfig(map); //Je recharge mon fichier de config
             coinContainer.resetAll(); //Je reset les pièces
@@ -115,7 +115,7 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
         {
             soundDeath.stop(); //Je m'assure que mon son est stoppé
             soundDeath.play(); //Je lance le son de mort
-            isDead(map,flagGameOver, flagInGame); // J'active la fonction mort
+            isDead(map,flagEndGame, flagInGame); // J'active la fonction mort
             fireballContainer.resetAll(); // Je reset les boules de feu
             coinContainer.loadConfig(map); //Je recharge mon fichier de config
             coinContainer.resetAll(); //Je reset les pièces
@@ -134,7 +134,7 @@ void Player::update(Map& map, bool& flagInGame, const int* level, FireballContai
     }
 }
 
-void Player::deplacement(bool& flagInGame, Map& map,const int* level) //Déplacement
+void Player::deplacement(bool& flagInGame, Map& map,const int* level, bool& flagPause) //Déplacement
 {
     if(hasJump && !lockUp) //Condition qui vérifie que mon joueur à sauter et qu'il n'est pas bloqué par un mur au dessus de lui
     {
@@ -183,6 +183,7 @@ void Player::deplacement(bool& flagInGame, Map& map,const int* level) //Déplacem
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) //Si j'appuie sur escape mon joueur revient au menu pause
         flagInGame = false;
+        flagPause = true;
 
     if(counterWalking == 3) //Si j'arrive à la fin de mon animation je la recommence
         counterWalking = 0;
