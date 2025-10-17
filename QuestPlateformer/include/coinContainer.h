@@ -1,9 +1,6 @@
 #ifndef COINCONTAINER_H
 #define COINCONTAINER_H
 #include <vector>
-#include <iostream>
-#include <fstream>
-#include <sstream>
 #include "coin.h"
 #include "map.h"
 #include <SFML/Graphics.hpp>

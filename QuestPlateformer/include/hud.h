@@ -1,6 +1,5 @@
 #ifndef HUDLAYER_H
 #define HUDLAYER_H
-#include <iostream>
 #include <string>
 #include "map.h"
 #include "player.h"

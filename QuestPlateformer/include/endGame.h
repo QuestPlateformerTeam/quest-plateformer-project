@@ -2,7 +2,6 @@
 #define ENDGAME_H
 #define MAX_NUMBER_OF_ITEMS_ENDGAME 2
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 class EndGame
 {

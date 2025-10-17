@@ -1,10 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <string>
-#include <fstream>
-#include <sstream>
 #include "coin.h"
 
 
@@ -42,7 +39,7 @@ class Map : public sf::Drawable, public sf::Transformable
         static const int NB_TILE_BY_COLUMN = SCREEN_HEIGHT/TILE_SIZE;
         static const int NB_TILE = (NB_TILE_BY_LINE*NB_TILE_BY_COLUMN);
         int level = 1;
-        std::string levelToLoad = "ressources/maps/map1.txt";
+        std::string levelToLoad = "../ressources/maps/map1.txt";
 
         sf::VertexArray m_vertices;
         sf::Texture m_tileset;

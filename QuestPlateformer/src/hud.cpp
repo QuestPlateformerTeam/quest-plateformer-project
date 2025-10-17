@@ -2,7 +2,7 @@
 
 HudLayer::HudLayer()
 {
-    if(!font.loadFromFile("ressources/police/arial.ttf"))
+    if(!font.loadFromFile("../ressources/police/arial.ttf"))
         std::cout<<"Erreur chargement font HUD"<<std::endl;
 
     lifeDisplayed.setFont(font);
