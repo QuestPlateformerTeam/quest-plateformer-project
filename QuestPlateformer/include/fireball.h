@@ -1,6 +1,5 @@
 #ifndef FIREBALL_H
 #define FIREBALL_H
-#include <iostream>
 #include <SFML/Graphics.hpp>
 
 class Fireball

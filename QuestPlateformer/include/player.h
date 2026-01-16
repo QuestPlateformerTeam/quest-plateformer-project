@@ -1,12 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "map.h"
-#include "fireball.h"
 #include "fireballContainer.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "coinContainer.h"
-#include "Collision.h"
 
 class Player
 {
@@ -36,10 +34,10 @@ class Player
         //Permet de savoir si le personnage peut sauter
         bool canJump = false;
 
-        //Pour le déplacement dans le jeu
+        //Pour le dï¿½placement dans le jeu
         float velocityY = 10;
 
-        //boolean pour vérifier si il y a collision
+        //boolean pour vï¿½rifier si il y a collision
         bool lockUp;
         bool lockDown;
         bool lockLeft;

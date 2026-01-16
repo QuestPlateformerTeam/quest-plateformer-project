@@ -1,4 +1,9 @@
 #include "coinContainer.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+
 
 CoinContainer::CoinContainer(Map& map)
 {
@@ -27,16 +32,16 @@ void CoinContainer::loadConfig(Map& map)
 {
     coinList.clear();
     int pos[8];
-    std::fstream myFile("ressources/maps/map"+std::to_string(map.getLevel())+"Config.txt", std::ios_base::in); //Je charge mon fichier config en rapport avec la map
+    std::fstream myFile("../ressources/maps/map"+std::to_string(map.getLevel())+"Config.txt", std::ios_base::in); //Je charge mon fichier config en rapport avec la map
     std::string Line;
 
     if(myFile.is_open())
     {
-        for (int i = 0; i <= NB_COIN *2 -1 ; i++) //Récupère les valeurs pour chaque tuile
+        for (int i = 0; i <= NB_COIN *2 -1 ; i++) //RÃ©cupÃ©re les valeurs pour chaque tuile
         {
-            getline(myFile,Line,','); //Récupère les valeurs une par une séparée par le délimiteur ','
+            getline(myFile,Line,','); //RÃ©cupÃ©re les valeurs une par une sÃ©parÃ©e par le dÃ©limiteur ','
             std::stringstream iss;
-            iss << Line; //Stocke les caractères dans un stream
+            iss << Line; //Stocke les caractï¿½res dans un stream
             iss >> pos[i]; //Renvoie le stream en un int dans l'array
         }
         myFile.close();
@@ -48,18 +53,18 @@ void CoinContainer::loadConfig(Map& map)
         coinList.push_back(new Coin(pos[i],pos[i+1])); //Je push les valeurs dans
 }
 
-void CoinContainer::draw(sf::RenderWindow& window)//va dessiner les pièces uniquement si elles affichables
+void CoinContainer::draw(sf::RenderWindow& window)//va dessiner les piÃ¨ces uniquement si elles affichables
 {
-    if(currentCoinToDisplay < NB_COIN)//Je vérifie en fonction des pièces à afficher
+    if(currentCoinToDisplay < NB_COIN)//Je vÃ©rifie en fonction des piÃ¨ces Ã  afficher
     {
-        for(int i =0; i<NB_COIN; i++) //Je boucle sur mes pièces
+        for(int i =0; i<NB_COIN; i++) //Je boucle sur mes piÃ¨ces
         {
-            if(i == currentCoinToDisplay) //Si la pièce du vecteur est la pièce à afficher
+            if(i == currentCoinToDisplay) //Si la piÃ¨ce du vecteur est la piÃ¨ce Ã  afficher
                 coinList.at(i)->changeDisplay(true); //Alors je set en true
             else//Sinon
                 coinList.at(i)->changeDisplay(false);//Je set en false
 
-            if(coinList.at(i)->getDisplay())//Je vérifie si je dois afficher la pièce
+            if(coinList.at(i)->getDisplay())//Je vÃ©rifie si je dois afficher la piï¿½ce
                 coinList.at(i)->draw(window);//Si oui, je l'affiche
         }
     }

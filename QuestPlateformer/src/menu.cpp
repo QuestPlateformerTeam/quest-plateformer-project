@@ -1,33 +1,31 @@
 #include "menu.h"
+#include <iostream>
 
 Menu::Menu()
 {
-    //ctor
+    // constructeur par dÃ©faut
 }
 
 Menu::~Menu()
 {
-    //dtor
+    // destructeur
 }
 
 Menu::Menu(float width, float height)
 {
-    this->width = width; //Je récupère la largeur de ma window
-    this->height = height; //Je récupère la hauteur de ma window
+    this->width = width; // largeur de la fenÃªtre
+    this->height = height; // hauteur de la fenÃªtre
 
-    if(!font.loadFromFile("ressources/police/arial.ttf")) //Je charge ma police d'écriture
-        std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;//Msg d'erreur console
+    if (!font.loadFromFile("../ressources/police/arial.ttf"))
+        std::cout << "Impossible de charger la police d'ecriture" << std::endl;
 
-    if(!fontTitle.loadFromFile("ressources/police/castlevania.ttf"))//Je charge ma police d'écriture
-        std::cout<<"Impossible de charger la police d'ecriture"<<std::endl;;//Msg d'erreur console
+    if (!fontTitle.loadFromFile("../ressources/police/castlevania.ttf"))
+        std::cout << "Impossible de charger la police d'ecriture" << std::endl;
 
-    if(!backgroundTexture.loadFromFile("ressources/graphics/background.png"))//Je charge mon fond de fenêtre
-        std::cout<<"Impossible de charger le background menu"<<std::endl;;//Msg d'erreur console
+    if (!backgroundTexture.loadFromFile("../ressources/graphics/background.png"))
+        std::cout << "Impossible de charger le background menu" << std::endl;
 
-    /*
-        Je prépare les textes pour mon menu
-    */
-
+    // PrÃ©paration des textes pour le menu
     menu[0].setFillColor(sf::Color::Red);
     menu[0].setString("Play");
 
@@ -37,13 +35,13 @@ Menu::Menu(float width, float height)
     menu[2].setFillColor(sf::Color::White);
     menu[2].setString("Exit");
 
-    selectedItemIndex = 0; //Item du menu qui est actuellement selectionné
+    selectedItemIndex = 0;
 
     title.setString("Quest Plateformer");
     title.setFillColor(sf::Color::White);
     title.setFont(fontTitle);
     title.setCharacterSize(60);
-    title.setPosition((this->width/2)-(title.getGlobalBounds().width/2),10);
+    title.setPosition((this->width / 2) - (title.getGlobalBounds().width / 2), 10);
 
     rectangle.setSize(sf::Vector2f(300, 50));
     rectangle.setFillColor(sf::Color::Black);
@@ -51,70 +49,68 @@ Menu::Menu(float width, float height)
     rectangle.setOutlineThickness(4);
 
     backgroundSprite.setTexture(backgroundTexture);
-    backgroundSprite.setScale(sf::Vector2f(1.8,1.8));
+    backgroundSprite.setScale(sf::Vector2f(1.8, 1.8));
 }
 
 void Menu::update(sf::Event& event, bool& flagInGame, sf::RenderWindow& window, HudLayer& hud, bool& flagPause)
 {
-    if(!flagInGame)//Si je ne suis pas en jeu
+    if (!flagInGame)
     {
-        switch (event.key.code)//Je fais un switch sur l'event
+        switch (event.key.code)
         {
-            case sf::Keyboard::Up: //Si j'appuie sur la flèche du haut
-                MoveUp();//Je bouge sur la case au dessus
+            case sf::Keyboard::Up:
+                MoveUp();
                 break;
-            case sf::Keyboard::Down: //Si j'appuie sur la flèche du bas
-                MoveDown(); //Je descends dans mon menu
+            case sf::Keyboard::Down:
+                MoveDown();
                 break;
-            case sf::Keyboard::Return: //Si j'appuie sur Enter
-                switch(selectedItemIndex) //En fonction de l'élément selectionné
+            case sf::Keyboard::Return:
+                switch (selectedItemIndex)
                 {
                     case 0:
-                        //Je lance jeu
                         flagInGame = true;
-                        hud.restartChrono(); //Je redémarre le chrono
+                        hud.restartChrono();
                         break;
                     case 1:
-                        std::cout << "Options button has been pressed" <<std::endl;
-                        flagInGame = false; //Je m'assure que je ne suis pas en jeu avant d'aller dans mon menu option
+                        std::cout << "Options button has been pressed" << std::endl;
+                        flagInGame = false;
                         break;
                     case 2:
                         window.close();
                         break;
-                    default:break;
+                    default:
+                        break;
                 }
-            default:break;
+            default:
+                break;
         }
     }
 }
 
-void Menu::draw(sf::RenderWindow & window){
+void Menu::draw(sf::RenderWindow& window)
+{
+    window.draw(backgroundSprite);
+    window.draw(title);
 
-    window.draw(backgroundSprite); //Je dessine mon fond de fenêtre
-    window.draw(title); //Je dessine mon titre
+    for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
+    {
+        float calculatedWidthRect = (this->width / 2) - 150;
+        float calculatedWidthText = (this->width / 2) - (menu[i].getGlobalBounds().width / 2);
+        float calculatedHeight = this->height / (MAX_NUMBER_OF_ITEMS + 1) * (i + 1);
 
-    //Je boucle sur tous mes items menu
-    for(int i = 0; i< MAX_NUMBER_OF_ITEMS; i++){
-        float calculatedWidthRect = (this->width/2) - 150; //Je calcule le milieu pour mon rectangle
-        float calculatedWidthText = (this->width/2) - (menu[i].getGlobalBounds().width/2); //Je calcule le milieu pour mon text
-        float calculatedHeight = this->height/(MAX_NUMBER_OF_ITEMS+1)*(i+1); //Je calcule la hauteur pour mes boxs
+        rectangle.setPosition(calculatedWidthRect, calculatedHeight - 5);
+        menu[i].setPosition(sf::Vector2f(calculatedWidthText, calculatedHeight));
+        menu[i].setFont(font);
 
-        rectangle.setPosition(calculatedWidthRect,calculatedHeight - 5 ); //Je set la position de mon rectangle
-        menu[i].setPosition(sf::Vector2f(calculatedWidthText,calculatedHeight)); //Je set la position du texte des menus
-        menu[i].setFont(font); //Je set le font
-
-        window.draw(rectangle); //Je dessine d'abord le rectangle
-        window.draw(menu[i]); //Je dessine ensuite le texte du menu au dessus
+        window.draw(rectangle);
+        window.draw(menu[i]);
     }
 }
 
-/*
-    Globalement les mouvements permette d'attribuer
-    à la variable selectedItemIndex la box sur laquelle elle se trouve
-    et de mettre en rouge le menu text sur lequel elle se trouve
-*/
-void Menu::MoveUp(){
-    if(selectedItemIndex - 1 >=0){
+void Menu::MoveUp()
+{
+    if (selectedItemIndex - 1 >= 0)
+    {
         menu[selectedItemIndex].setFillColor(sf::Color::White);
         selectedItemIndex--;
         menu[selectedItemIndex].setFillColor(sf::Color::Red);
@@ -123,11 +119,10 @@ void Menu::MoveUp(){
 
 void Menu::MoveDown()
 {
-    if(selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS){
+    if (selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS)
+    {
         menu[selectedItemIndex].setFillColor(sf::Color::White);
         selectedItemIndex++;
         menu[selectedItemIndex].setFillColor(sf::Color::Red);
     }
 }
-
-

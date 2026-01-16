@@ -1,8 +1,9 @@
 #include "fireballContainer.h"
-FireballContainer::FireballContainer() //Je crée un container qui stocke toutes mes boules de feu
+
+FireballContainer::FireballContainer() //Je crï¿½e un container qui stocke toutes mes boules de feu
 {
     for(int i =0; i<=NB_FIREBALL; i++)
-        fireballList.push_back(new Fireball()); //Je push une nouvelle boule de feu en fonctione de la difficulté demandée
+        fireballList.push_back(new Fireball()); //Je push une nouvelle boule de feu en fonctione de la difficultï¿½ demandï¿½e
 }
 
 FireballContainer::~FireballContainer(){}//destructeur
@@ -13,7 +14,7 @@ void FireballContainer::draw(sf::RenderWindow& window) //Je dessine mes boules d
         fireballList.at(i)->draw(window);
 }
 
-Fireball& FireballContainer::getOneFireball(int i) //Je récupère une boule de feu depuis mon vecteur
+Fireball& FireballContainer::getOneFireball(int i) //Je rï¿½cupï¿½re une boule de feu depuis mon vecteur
 {
     return *fireballList.at(i);
 }
@@ -24,7 +25,7 @@ void FireballContainer::resetAll() //Je reset la position des boules de feu
         fireballList.at(i)->reset();
 }
 
-int FireballContainer::getNbFireball() //Je récupère le nombre de boule de feu max possible sur ma map
+int FireballContainer::getNbFireball() //Je rï¿½cupï¿½re le nombre de boule de feu max possible sur ma map
 {
     return NB_FIREBALL;
 }

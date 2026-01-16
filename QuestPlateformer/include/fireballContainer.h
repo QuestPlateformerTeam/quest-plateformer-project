@@ -1,6 +1,5 @@
 #ifndef FIREBALLCONTAINER_H
 #define FIREBALLCONTAINER_H
-#include <iostream>
 #include <vector>
 #include "fireball.h"
 #include <SFML/Graphics.hpp>
